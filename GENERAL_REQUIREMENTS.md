@@ -53,30 +53,6 @@
   6. Architecture Decision Records (ADRs) for major tradeoffs
 - **GR-045:** Implementation SHALL NOT begin until the artifacts above are approved by the designated decision owners.
 
-## 9. Delivery and Governance Requirements
-
-- **GR-046:** All requirements SHALL use unique requirement IDs for traceability.
-- **GR-047:** Every task, story, and pull request SHALL reference approved requirement IDs.
-- **GR-048:** Changes to architecture-driving requirements SHALL require formal review and sign-off.
-- **GR-049:** Definition of Done SHALL include tests, documentation, monitoring readiness, and rollback readiness.
-
-## 10. Out of Scope for General Requirements
-
-- **GR-050:** This document SHALL NOT define detailed UX flows/content, field-level schema contracts, low-level API payload contracts, or sprint-level implementation sequencing.
-- **GR-051:** Out-of-scope details SHALL be defined in feature-specific requirement documents.
-
-## 11. Open Questions (Must Be Resolved Before Detailed Specs)
-
-- **GR-052:** Each open question SHALL include an owner, due date, and status.
-- **GR-053:** The following questions SHALL be resolved before feature implementation:
-  1. Who are the primary user personas and their top workflows?
-  2. What are the expected load, growth, and usage peaks?
-  3. What compliance and security standards apply?
-  4. Which systems are mandatory integrations?
-  5. What are the availability and recovery targets?
-  6. What environments are required (dev/stage/prod/etc.)?
-  7. What are the acceptance criteria for initial release?
-
 ## 12. Next Step
 
 - **GR-054:** Each feature SHALL have a dedicated requirements document based on `FEATURE_REQUIREMENTS_TEMPLATE.md`.

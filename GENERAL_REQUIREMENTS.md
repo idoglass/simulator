@@ -16,7 +16,7 @@
 
 - **GR-007:** The project SHALL deliver a robust and generic stateless application.
 - **GR-008:** The application SHALL simulate, for a target, any number of applications by sending and receiving messages.
-- **GR-009:** Simulation behavior SHALL be driven only by C type definitions (`ctypes`) from `.h` files and predefined actions.
+- **GR-009:** Simulation behavior SHALL be driven only by C type definitions (`ctypes`) from `.h` files and predefined actions (tasks).
 - **GR-010:** Requirements, implementation, and validation artifacts SHALL remain traceable end-to-end.
 - **GR-011:** The simulator SHALL be portable across supported target environments.
 - **GR-012:** The simulator SHALL provide both a graphical user interface (GUI) and a terminal user interface (TUI).
@@ -27,10 +27,12 @@
 - **GR-020:** The application SHALL simulate message send/receive behavior across any number of applications, subject to deployed infrastructure limits.
 - **GR-021:** The application SHALL remain stateless at the application layer during simulation execution.
 - **GR-022:** The application SHALL use only C type definitions (`ctypes`) from `.h` files to define message structures, participants, and simulation flow rules.
-- **GR-023:** The application SHALL use only predefined actions to execute simulation behavior.
+- **GR-023:** The application SHALL use only predefined actions (tasks) to execute simulation behavior.
 - **GR-024:** Feature-specific requirements SHALL map to one or more requirements in this section or Section 7.5.
 - **GR-025:** GUI and TUI interfaces SHALL expose the core simulation capabilities.
 - **GR-026:** GUI and TUI interfaces SHALL use the same underlying simulation engine and requirement model.
+- **GR-027:** The simulator SHALL provide a way to create predefined actions (tasks) by composing or extending existing tasks.
+- **GR-028:** The simulator SHALL support loading predefined actions (tasks) at runtime.
 
 ## 7. Non-Functional Requirements
 

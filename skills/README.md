@@ -30,9 +30,13 @@ Project-specific context now includes the `py-gui` submodule (`tk-mvc` framework
 - `PROJECT_SKILLS_STANDARD_V1.md`  
   Project-specific skills standard derived from discovery answers.
 
+- `SUBMODULE_WORKFLOW.md`  
+  Operational workflow for safely updating and pinning the `py-gui` submodule.
+
 ## How to use
 
 1. Start with `GENERIC_SKILLS_FOR_SIMULATOR_PROJECT.md` to align team expectations.
 2. Use `CODE_SMELL_AND_OOP_CHECKLIST.md` during design reviews and PR reviews.
 3. Answer `PROJECT_DISCOVERY_QUESTIONS.md`; record decisions in `PROJECT_DISCOVERY_ANSWERS.md`.
 4. Follow `PROJECT_SKILLS_STANDARD_V1.md` as the default implementation/review baseline for this project.
+5. Use `SUBMODULE_WORKFLOW.md` whenever the `py-gui` submodule pointer changes.

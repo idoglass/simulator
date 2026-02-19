@@ -5,6 +5,7 @@
 - **GR-001:** This document SHALL define mandatory baseline project requirements that govern architecture and delivery before implementation.
 - **GR-002:** All feature-specific requirement documents SHALL comply with this baseline unless an exception is explicitly approved by the technical lead and product owner.
 - **GR-003:** The terms **SHALL/MUST**, **SHOULD**, and **MAY** are normative. SHALL/MUST indicates a mandatory requirement.
+- **GR-013:** Requirement IDs in this document SHALL remain stable across revisions and MAY be non-sequential.
 
 ## 2. Scope of This Document
 
@@ -15,24 +16,24 @@
 ## 3. Project Goals
 
 - **GR-007:** The project SHALL deliver a robust and generic stateless application.
-- **GR-008:** The application SHALL simulate, for a target, any number of applications by sending and receiving messages.
-- **GR-009:** Simulation behavior SHALL be driven only by C type definitions (`ctypes`) from `.h` files and predefined actions (tasks).
+- **GR-008:** The application SHALL simulate, for a target, one or more applications by sending and receiving messages, up to configured and validated capacity limits.
+- **GR-009:** Simulation behavior SHALL be driven only by C type definitions (`ctypes`) from `.h` files and registered tasks (built-in or user-defined).
 - **GR-010:** Requirements, implementation, and validation artifacts SHALL remain traceable end-to-end.
-- **GR-011:** The simulator SHALL be portable across supported target environments.
+- **GR-011:** The simulator SHALL be portable across supported target environments defined by an explicit compatibility matrix (OS, architecture, and runtime/toolchain versions).
 - **GR-012:** The simulator SHALL provide both a graphical user interface (GUI) and a terminal user interface (TUI).
 
 ## 6. Functional Requirement Categories (High-Level)
 
 - **GR-019:** The application SHALL receive a target and execute simulation flows for that target.
-- **GR-020:** The application SHALL simulate message send/receive behavior across any number of applications, subject to deployed infrastructure limits.
-- **GR-021:** The application SHALL remain stateless at the application layer during simulation execution.
+- **GR-020:** The application SHALL simulate message send/receive behavior across one or more applications, constrained by configured and validated resource limits.
+- **GR-021:** The application SHALL remain stateless at the application layer during simulation execution and SHALL NOT persist mutable per-session or per-target execution state in process between requests.
 - **GR-022:** The application SHALL use only C type definitions (`ctypes`) from `.h` files to define message structures, participants, and simulation flow rules.
-- **GR-023:** The application SHALL use only predefined actions (tasks) to execute simulation behavior.
-- **GR-024:** Feature-specific requirements SHALL map to one or more requirements in this section or Section 7.5.
+- **GR-023:** The application SHALL execute simulation behavior only through registered tasks.
+- **GR-024:** Feature-specific requirements SHALL map to one or more requirements in this section or Section 7.
 - **GR-025:** GUI and TUI interfaces SHALL expose the core simulation capabilities.
 - **GR-026:** GUI and TUI interfaces SHALL use the same underlying simulation engine and requirement model.
-- **GR-027:** The simulator SHALL provide a way to create predefined actions (tasks) by composing or extending existing tasks.
-- **GR-028:** The simulator SHALL support loading predefined actions (tasks) at runtime.
+- **GR-027:** The simulator SHALL provide a way to create user-defined tasks by composing or extending existing registered tasks.
+- **GR-028:** The simulator SHALL support loading and registering tasks at runtime prior to execution.
 
 ## 7. Non-Functional Requirements
 
@@ -44,10 +45,10 @@
 
 ### 7.6 Architecture, Documentation, and Logging Standards
 
-- **GR-057:** User interface documentation, including relevant UI behavior notes derived from code comments, SHALL be exposed through the GUI Help section and the TUI help/man section.
+- **GR-057:** User-facing documentation for all UI capabilities SHALL be exposed through the GUI Help section and the TUI help/man section; relevant developer notes MAY be promoted from code comments after documentation review.
 - **GR-058:** The architecture SHALL follow the MVC pattern and use the designated framework (FW), with detailed framework standards defined in a separate architecture specification.
-- **GR-059:** The application SHALL produce highly verbose logs for key lifecycle events, including simulation start/stop, task creation/loading, and message send/receive operations.
-- **GR-060:** When a reliable and commonly adopted third-party library is available and suitable, it SHALL be preferred over building a custom implementation.
+- **GR-059:** The application SHALL provide highly verbose logs for key lifecycle events (including simulation start/stop, task creation/loading, and message send/receive), with runtime-configurable log levels and mandatory redaction of sensitive data.
+- **GR-060:** When a reliable and commonly adopted third-party library is available and suitable, it SHALL be preferred over custom implementation, provided it meets security, maintenance, and license-compatibility requirements.
 
 ## 8. Architecture Definition Requirements
 

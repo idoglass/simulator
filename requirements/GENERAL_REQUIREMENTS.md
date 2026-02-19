@@ -49,7 +49,7 @@
 ### 7.6 Architecture, Documentation, and Logging Standards
 
 - **GR-057:** User-facing documentation for all UI capabilities SHALL be exposed through the GUI Help section and the TUI help/man section; relevant developer notes MAY be promoted from code comments after documentation review.
-- **GR-058:** The architecture SHALL follow the MVC pattern; GUI SHALL align with the designated framework (`py-gui` submodule using `tk-mvc`) and TUI SHALL align with Textual. Framework/submodule updates SHALL follow a documented workflow with compatibility validation.
+- **GR-058:** The architecture SHALL follow the MVC pattern; GUI SHALL align with the designated framework (`py-gui` submodule using `tk-mvc`) and TUI SHALL align with Textual. Framework/submodule updates SHALL follow a documented workflow with compatibility validation. External boundary implementations SHALL be organized under an explicit `adapters` boundary (including `ui` and `transport`) as an intentional architectural-role grouping.
 - **GR-059:** The application SHALL provide highly verbose logs for key lifecycle events (including simulation start/stop, task creation/loading, and message send/receive), with runtime-configurable log levels and mandatory redaction of sensitive data.
 - **GR-060:** When a reliable and commonly adopted third-party library is available and suitable, it SHALL be preferred over custom implementation, provided it meets security, maintenance, and license-compatibility requirements.
 

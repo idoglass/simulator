@@ -14,6 +14,7 @@ It is intentionally broad and should be refined into detailed design artifacts b
 4. **Contract-driven behavior** from `.h` / `ctypes` definitions.
 5. **Task-driven execution** via registered tasks only.
 6. **Framework-aware, framework-contained** integration (`py-gui` for Tkinter MVC, Textual for TUI).
+7. **Intentional adapter boundary grouping**: `ui` and `transport` remain under `adapters/` because both are external boundary implementations, even when they do not share code.
 
 ## 2) Main Components (High Level)
 
@@ -127,6 +128,15 @@ simulator/
     gui_tui_smoke_check.py
     submodule_policy_check.py
 ```
+
+### 4.1 Adapter Directory Intent (Important)
+
+`adapters/` is grouped by **architectural role**, not code sharing:
+
+- `adapters/ui/*` translates framework interactions (Tkinter/Textual) into shared engine calls.
+- `adapters/transport/*` translates network protocol concerns (TCP/UDP) into shared engine contracts.
+
+These are intentionally co-located under `adapters/` because both connect external systems/frameworks to the core domain boundary.
 
 ## 5) Requirements-to-Architecture Alignment (Broad)
 

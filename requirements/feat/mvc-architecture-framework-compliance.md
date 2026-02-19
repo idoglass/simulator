@@ -10,6 +10,7 @@ Implement features under MVC architecture using designated frameworks (`py-gui`/
 ## Acceptance Criteria
 - Feature design maps to MVC layers and follows framework standards.
 - Framework/submodule updates include compatibility validation notes.
+- Adapter boundary is explicit and documented: `ui` and `transport` live under `adapters/` by architectural role, not because of shared implementation.
 
 ## Implementation Plan (MVP)
 
@@ -18,3 +19,4 @@ Implement features under MVC architecture using designated frameworks (`py-gui`/
 3. Map each feature module to explicit MVC ownership (View/Controller/Model-Service).
 4. Add review gate: reject cross-layer imports that violate MVC boundaries.
 5. Follow documented submodule workflow when updating `py-gui` pointers.
+6. Keep and document `adapters/ui` and `adapters/transport` as intentional boundary groupings.

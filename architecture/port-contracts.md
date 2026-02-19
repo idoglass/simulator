@@ -33,6 +33,10 @@ class TransportPort(Protocol):
 - Used by run/replay workflows.
 - Returns ordered observed interactions + transport-level errors.
 
+**Plain-language explanation**
+- The simulator core says "send these messages to this target over TCP/UDP."
+- The transport adapter does the protocol work and returns what actually happened.
+
 ---
 
 ## 2) Contract Port
@@ -48,6 +52,10 @@ class ContractPort(Protocol):
 **Behavior notes**
 - Accepts repository-managed and user-provided `.h` sources.
 - Fails fast on unknown type/field references.
+
+**Plain-language explanation**
+- This is the gatekeeper for message shapes.
+- If a message does not match `.h`/`ctypes` rules, execution stops early.
 
 ---
 
@@ -67,6 +75,10 @@ class TaskRegistryPort(Protocol):
 - Registration is atomic and deterministic.
 - Duplicate/conflict behavior is explicit in return result.
 
+**Plain-language explanation**
+- This is the single source of truth for runnable tasks.
+- A task is either fully registered or not registered at all.
+
 ---
 
 ## 4) Verification Port
@@ -85,6 +97,10 @@ class VerificationPort(Protocol):
 **Behavior notes**
 - MVP semantics are count-based.
 - Result includes pass/fail + mismatch details.
+
+**Plain-language explanation**
+- After a run, this checks whether expected interactions happened the expected number of times.
+- It returns a clear pass/fail result plus mismatch details.
 
 ---
 
@@ -108,6 +124,10 @@ class CaptureReplayPort(Protocol):
 - Capture artifacts are file-based in MVP.
 - Metadata must include replay-critical fields (protocol, target, task/version context).
 
+**Plain-language explanation**
+- This writes captured run traffic to files and reads files back for replay.
+- Replay uses saved metadata so behavior is repeatable.
+
 ---
 
 ## 6) Event Bus Port
@@ -123,6 +143,10 @@ class EventBusPort(Protocol):
 **Behavior notes**
 - Domain/services publish events; adapter implementations dispatch handlers.
 - Default desktop implementation can be in-process.
+
+**Plain-language explanation**
+- Core modules emit events without knowing who listens.
+- Subscribers react to events through a shared event bus contract.
 
 ---
 
@@ -140,6 +164,10 @@ class LoggingPort(Protocol):
 **Behavior notes**
 - Fields include correlation keys (`run_id`, `task_id`, `target_id`).
 - Sensitive values are redacted before emission.
+
+**Plain-language explanation**
+- This standardizes how services write logs.
+- It ensures useful tracing fields are present and sensitive data is masked.
 
 ---
 

@@ -21,12 +21,12 @@
 
 ## 6. Functional Requirement Categories (High-Level)
 
-- **GR-019:** The system SHALL define and implement core user workflows by persona.
-- **GR-020:** The system SHALL define data lifecycle behavior (create/read/update/delete and lifecycle rules) for all managed entities.
-- **GR-021:** Access control SHALL be role- and permission-based for protected functionality.
-- **GR-022:** Required internal/external integrations SHALL be explicitly defined and governed by interfaces/contracts.
-- **GR-023:** Administrative and operational controls SHALL be defined for support, monitoring, and issue handling.
-- **GR-024:** Each feature-specific requirement SHALL map to one or more requirements in this section or Section 7.
+- **GR-019:** The application SHALL receive a target and execute simulation flows for that target.
+- **GR-020:** The application SHALL simulate message send/receive behavior across any number of applications, subject to deployed infrastructure limits.
+- **GR-021:** The application SHALL remain stateless at the application layer during simulation execution.
+- **GR-022:** The application SHALL use only MUG definitions to define message structures, participants, and simulation flow rules.
+- **GR-023:** The application SHALL use only predefined actions to execute simulation behavior.
+- **GR-024:** Feature-specific requirements SHALL map to one or more requirements in this section or Section 7.5.
 
 ## 7. Non-Functional Requirements
 

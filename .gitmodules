@@ -1,0 +1,3 @@
+[submodule "py-gui"]
+	path = py-gui
+	url = https://github.com/idoglass/py-gui.git

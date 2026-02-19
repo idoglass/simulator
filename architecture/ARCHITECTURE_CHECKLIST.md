@@ -14,9 +14,9 @@ Architecture design stage is complete only when:
 
 | ID | Item | Required Artifacts | Requirement Mapping | Done Criteria | Status |
 | --- | --- | --- | --- | --- | --- |
-| A-01 | System context definition | `architecture/context-diagram.*` | GR-044, GR-045 | External actors, boundaries, and submodule role (`py-gui`) are explicit. | Todo |
-| A-02 | Component architecture | `architecture/component-diagram.*` | GR-044, GR-058 | Components and dependency direction are defined (`domain -> ports <- adapters`). | Todo |
-| A-03 | Runtime sequence (happy path) | `architecture/sequence-run.*` | GR-019, GR-020, GR-023, GR-026 | End-to-end run flow from target selection to result is documented. | Todo |
+| A-01 | System context definition | `architecture/context-diagram.md` | GR-044, GR-045 | External actors, boundaries, and submodule role (`py-gui`) are explicit. | Done |
+| A-02 | Component architecture | `architecture/component-diagram.md` | GR-044, GR-058 | Components and dependency direction are defined (`domain -> ports <- adapters`). | Done |
+| A-03 | Runtime sequence (happy path) | `architecture/sequence-run.md` | GR-019, GR-020, GR-023, GR-026 | End-to-end run flow from target selection to result is documented. | Done |
 | A-04 | Runtime sequence (task load) | `architecture/sequence-task-load.*` | GR-027, GR-028 | Runtime task load/register flow and validation points are documented. | Todo |
 | A-05 | Runtime sequence (capture/replay) | `architecture/sequence-capture-replay.*` | GR-029 | File-based capture and replay flow is documented and deterministic assumptions listed. | Todo |
 | A-06 | Domain model | `architecture/domain-model.*` | GR-021, GR-023, GR-030 | Core entities and lifecycle states are defined, including stateless boundary notes. | Todo |

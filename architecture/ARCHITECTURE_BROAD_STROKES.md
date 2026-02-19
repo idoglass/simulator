@@ -165,3 +165,9 @@ These are intentionally co-located under `adapters/` because both connect extern
 4. Sequence diagram for one run (target + protocol + task + verify)
 5. Risk register and mitigation plan
 6. ADRs for key decisions (shared engine boundary, transport abstraction, task format)
+
+## 8) Stage Progress (Current)
+
+- A-01 System context: `architecture/context-diagram.md` (Done)
+- A-02 Component architecture: `architecture/component-diagram.md` (Done)
+- A-03 Happy-path sequence: `architecture/sequence-run.md` (Done)

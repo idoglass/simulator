@@ -109,7 +109,15 @@ Per target/run transport config should include:
 4. Framing config required for flows that depend on framing.
 5. Invalid config prevents run start.
 
-## 9) Test Expectations (Architecture-Level)
+## 9) Threading and Concurrency Rules (MVP)
+
+1. Transport adapters SHALL NOT perform blocking socket operations on the UI thread.
+2. Each active transport flow (TCP/UDP client/server interaction scope) SHOULD run in a worker thread or async task managed by the application layer.
+3. Cancellation SHALL be cooperative: run cancellation signals stop new I/O and close sockets promptly.
+4. Transport-originated events/results may be published from worker context, but UI adapters must marshal UI mutations onto the UI event loop.
+5. Shared mutable state between transport workers and other components SHALL be minimized and guarded (message passing preferred over shared object mutation).
+
+## 10) Test Expectations (Architecture-Level)
 
 For each protocol/mode combination:
 
@@ -120,6 +128,6 @@ For each protocol/mode combination:
 - Timeout failure path
 - Retry exhaustion path (if retries enabled)
 
-## 10) Requirement Mapping
+## 11) Requirement Mapping
 
-- GR-031, GR-020, GR-026, GR-039, GR-059
+- GR-031, GR-020, GR-026, GR-039, GR-058, GR-059

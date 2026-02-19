@@ -93,6 +93,9 @@ sequenceDiagram
 3. Sensitive data must be redacted before publishing/logging.
 4. Event dispatch failures must not corrupt core run state.
 5. Event bus implementation choice must preserve UI responsiveness (non-blocking dispatch strategy as needed).
+6. Transport I/O and protocol waits SHALL execute off the UI thread (Tkinter main loop / Textual app loop).
+7. Any subscriber that mutates UI state SHALL marshal that update onto the owning UI thread/event loop.
+8. The default in-process bus SHOULD support queued/asynchronous dispatch across threads to avoid deadlocks and long publisher stalls.
 
 ## 7) Requirement Mapping
 

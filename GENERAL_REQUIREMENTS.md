@@ -18,6 +18,8 @@
 - **GR-008:** The application SHALL simulate, for a target, any number of applications by sending and receiving messages.
 - **GR-009:** Simulation behavior SHALL be driven only by C type definitions (`ctypes`) from `.h` files and predefined actions.
 - **GR-010:** Requirements, implementation, and validation artifacts SHALL remain traceable end-to-end.
+- **GR-011:** The simulator SHALL be portable across supported target environments.
+- **GR-012:** The simulator SHALL provide both a graphical user interface (GUI) and a terminal user interface (TUI).
 
 ## 6. Functional Requirement Categories (High-Level)
 
@@ -27,6 +29,8 @@
 - **GR-022:** The application SHALL use only C type definitions (`ctypes`) from `.h` files to define message structures, participants, and simulation flow rules.
 - **GR-023:** The application SHALL use only predefined actions to execute simulation behavior.
 - **GR-024:** Feature-specific requirements SHALL map to one or more requirements in this section or Section 7.5.
+- **GR-025:** GUI and TUI interfaces SHALL expose the core simulation capabilities.
+- **GR-026:** GUI and TUI interfaces SHALL use the same underlying simulation engine and requirement model.
 
 ## 7. Non-Functional Requirements
 

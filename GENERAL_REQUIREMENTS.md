@@ -19,30 +19,6 @@
 - **GR-009:** Requirements, implementation, and validation artifacts SHALL remain traceable end-to-end.
 - **GR-010:** Design decisions SHALL prioritize maintainability, clear ownership boundaries, and operational safety.
 
-## 4. Stakeholders and Decision Roles
-
-- **GR-011:** The following roles SHALL be assigned before implementation starts:
-  - Product owner
-  - Technical lead/architect
-  - Engineering owner/team
-  - Security/privacy reviewer
-  - QA/test owner
-- **GR-012:** Every architecture decision and architecture-driving requirement SHALL have a named accountable owner.
-- **GR-013:** Review and sign-off authority for architecture-driving changes SHALL be documented.
-
-## 5. Assumptions and Constraints
-
-### 5.1 Baseline Assumptions
-
-- **GR-014:** The architecture SHALL support requirement changes through modular and extensible design.
-- **GR-015:** External dependencies SHALL be treated as failure-prone and versioned integration points.
-- **GR-016:** Logging, metrics, and tracing SHALL be included from the first deployable increment.
-
-### 5.2 Known Constraints (To Confirm)
-
-- **GR-017:** Budget, timeline, platform/hosting, compliance boundaries, and team capacity constraints SHALL be documented before implementation.
-- **GR-018:** Unresolved constraints SHALL be recorded in Section 11 with owner, due date, and status.
-
 ## 6. Functional Requirement Categories (High-Level)
 
 - **GR-019:** The system SHALL define and implement core user workflows by persona.
@@ -54,42 +30,11 @@
 
 ## 7. Non-Functional Requirements
 
-### 7.1 Reliability and Availability
-
-- **GR-025:** Uptime target and error budget SHALL be defined and approved before implementation begins.
-- **GR-026:** The design SHALL include graceful degradation behavior for dependency failures.
-- **GR-027:** Backup, restore, and disaster recovery requirements (including RPO/RTO targets) SHALL be defined.
-
-### 7.2 Performance and Capacity
-
-- **GR-028:** Measurable latency and throughput targets SHALL be defined for critical workflows.
-- **GR-029:** Capacity assumptions SHALL include average, peak, burst, and growth expectations.
-- **GR-030:** A scaling strategy and capacity limits SHALL be documented and validated.
-
-### 7.3 Security and Privacy
-
-- **GR-031:** Authentication and authorization SHALL be mandatory for protected resources and operations.
-- **GR-032:** Data SHALL be protected in transit and at rest according to data sensitivity.
-- **GR-033:** Secrets SHALL be managed using approved secret management mechanisms; hard-coded credentials are prohibited.
-- **GR-034:** Threat modeling and security review SHALL be completed before production release.
-
-### 7.4 Observability and Operations
-
-- **GR-035:** Critical paths SHALL emit structured logs, metrics, and traces.
-- **GR-036:** Health checks, alert thresholds, and incident escalation paths SHALL be defined.
-- **GR-037:** Operational ownership and incident response procedures SHALL be documented.
-
 ### 7.5 Maintainability and Testability
 
 - **GR-038:** The codebase SHALL be modular with clear ownership boundaries.
 - **GR-039:** Automated testing SHALL include unit, integration, and end-to-end coverage for critical paths.
 - **GR-040:** CI/CD quality gates SHALL include linting, test execution, and security checks.
-
-### 7.6 Data and Integrity
-
-- **GR-041:** Data entities, ownership, and lifecycle states SHALL be defined.
-- **GR-042:** Consistency expectations (strong/eventual) SHALL be explicitly defined per data flow.
-- **GR-043:** Data retention, archival, and deletion requirements SHALL be documented and enforceable.
 
 ## 8. Architecture Definition Requirements
 

@@ -1,6 +1,7 @@
-# Feature Requirements Template
+# Feature Requirements Template (Small-Scale PC Simulator)
 
-Use this template for every feature-specific requirements document.
+Use this template for feature-specific requirements in this project.
+Keep the document short and practical (typically 1-4 pages).
 
 ---
 
@@ -11,222 +12,137 @@ Use this template for every feature-specific requirements document.
 - Document Version:
 - Status: Draft | In Review | Approved
 - Author/Owner:
-- Reviewers:
 - Created Date:
 - Last Updated:
-- Target Release:
-- Related Tickets/Issues:
-- Related ADRs:
+- Target Milestone:
+- Related Issue(s):
 
-## 1. Summary
+## 1. Feature Summary
 
-Provide a short description of the feature and why it matters.
+- What this feature does:
+- Why this feature is needed:
+- Primary user outcome:
+- Mapped General Requirement IDs (from `GENERAL_REQUIREMENTS.md`):
 
-## 2. Problem Statement
+## 2. Scope
 
-- Current state:
-- Problem/pain point:
-- Business impact:
-- Technical impact:
-
-## 3. Goals and Non-Goals
-
-### 3.1 Goals
-
-- Goal 1
-- Goal 2
-
-### 3.2 Non-Goals
-
-- Non-goal 1
-- Non-goal 2
-
-## 4. Stakeholders and Personas
-
-### 4.1 Stakeholders
-
-- Product owner:
-- Engineering owner:
-- QA owner:
-- Security/privacy reviewer:
-
-### 4.2 Personas and Primary Workflows
-
-| Persona | Primary workflow | Success criteria |
-| --- | --- | --- |
-| Persona A | Workflow A | Outcome A |
-
-## 5. Scope
-
-### 5.1 In Scope
+### 2.1 In Scope
 
 - Item 1
 - Item 2
 
-### 5.2 Out of Scope
+### 2.2 Out of Scope
 
 - Item 1
 - Item 2
 
-## 6. User Stories and Acceptance Criteria
+### 2.3 Assumptions and Limits
 
-Use one entry per story.
+- Assumption 1
+- Limit 1 (PC resource/capacity or runtime limit)
 
-| Story ID | User story | Acceptance criteria | Priority |
-| --- | --- | --- | --- |
-| US-001 | As a ..., I want ..., so that ... | Given/When/Then ... | P0/P1/P2 |
+## 3. User Scenarios
 
-## 7. Functional Requirements
-
-Each requirement must be atomic, testable, and uniquely identified.
-
-| Requirement ID | Requirement | Rationale | Priority | Dependency |
+| Scenario ID | User type | Interface (GUI/TUI) | Flow summary | Success criteria |
 | --- | --- | --- | --- | --- |
-| FR-001 | The system must ... | Why this is needed | P0/P1/P2 | FR-000 / external |
+| SC-001 | Operator | GUI | ... | ... |
 
-Additional notes:
+## 4. Functional Requirements
 
-- Error handling behavior:
-- Edge cases:
-- Permission model considerations:
+Each requirement must be atomic, testable, and include acceptance criteria.
 
-## 8. Data Requirements
-
-### 8.1 Data Model
-
-- Entities affected:
-- New fields:
-- Updated fields:
-- Deprecated fields:
-
-### 8.2 Data Lifecycle
-
-- Data creation:
-- Data updates:
-- Data retention:
-- Data deletion and archival:
-
-### 8.3 Migration and Backfill
-
-- Migration needed: Yes/No
-- Backfill needed: Yes/No
-- Migration/backfill strategy:
-- Rollback strategy:
-
-## 9. API and Integration Requirements
-
-### 9.1 Internal APIs
-
-| API | Method | Endpoint | Request/Response summary | Error cases |
+| FR ID | Requirement | Acceptance criteria | Priority | Mapped GR ID(s) |
 | --- | --- | --- | --- | --- |
-| Service A | POST | /v1/example | ... | 400/401/500 |
+| FR-001 | The simulator shall ... | Given/When/Then ... | P0/P1/P2 | GR-0xx |
 
-### 9.2 External Integrations
+### 4.1 Simulator-Specific Coverage Checklist
 
-| System | Integration type | Required behavior | Failure behavior |
-| --- | --- | --- | --- |
-| External X | REST/Event/File | ... | Retry/degrade/fail |
+Mark each as Applicable/Not Applicable for this feature:
 
-### 9.3 Contract Requirements
+- [ ] Target-based simulation input defined
+- [ ] Message send/receive behavior defined
+- [ ] `.h`/`ctypes`-driven structure rules defined
+- [ ] Registered task usage defined (built-in/user-defined)
+- [ ] Runtime task loading/registration behavior defined
+- [ ] Stateless behavior boundary defined
 
-- Versioning approach:
-- Idempotency requirements:
-- Rate limits and quotas:
-- Timeout and retry expectations:
+## 5. Task Requirements (Predefined/Registered Tasks)
 
-## 10. Non-Functional Requirements (Measurable)
-
-Define explicit, testable targets for this feature.
-
-| NFR ID | Category | Requirement | Target | Validation method |
-| --- | --- | --- | --- | --- |
-| NFR-001 | Performance | P95 latency for workflow X | <= 300 ms | Load test |
-| NFR-002 | Reliability | Availability for feature endpoints | >= 99.9% monthly | SLO monitoring |
-| NFR-003 | Security | Authentication + authorization | 100% protected endpoints | Security test/review |
-| NFR-004 | Observability | Logs/metrics/traces emitted | Required for all critical paths | Telemetry checks |
-
-## 11. Security, Privacy, and Compliance
-
-- Data classification:
-- Sensitive data handling:
-- Access control requirements:
-- Audit logging requirements:
-- Compliance obligations:
-- Threat model update required: Yes/No
-
-## 12. Architecture Impact and Decisions
-
-### 12.1 Components Affected
-
-- Component/service A:
-- Component/service B:
-
-### 12.2 Proposed Design Notes
-
-- Design summary:
-- Key tradeoffs:
-- Alternatives considered:
-
-### 12.3 ADR Requirement
-
-- ADR needed: Yes/No
-- ADR reference:
-
-## 13. Observability and Operational Readiness
-
-- Required logs:
-- Required metrics:
-- Required traces:
-- Alerts and thresholds:
-- Dashboards:
-- Runbook updates:
-
-## 14. Testing and Validation Strategy
-
-| Test type | Coverage expectations | Owner | Pass criteria |
-| --- | --- | --- | --- |
-| Unit | Core business logic | Eng | All tests pass |
-| Integration | Service boundaries and contracts | Eng/QA | Critical paths pass |
-| End-to-end | User workflows | QA | Acceptance criteria met |
-| Performance | Latency/throughput goals | Eng | NFR targets met |
-| Security | AuthZ/AuthN, secrets, abuse cases | Security/Eng | No critical findings |
-
-## 15. Rollout and Release Plan
-
-- Feature flag strategy:
-- Environment rollout order:
-- Data rollout considerations:
-- Monitoring during rollout:
-- Rollback plan:
-
-## 16. Risks and Mitigations
-
-| Risk ID | Risk description | Impact | Likelihood | Mitigation | Owner |
-| --- | --- | --- | --- | --- | --- |
-| R-001 | ... | High/Med/Low | High/Med/Low | ... | Team/member |
-
-## 17. Open Questions
-
-| Question ID | Question | Owner | Due date | Status |
-| --- | --- | --- | --- | --- |
-| Q-001 | ... | ... | YYYY-MM-DD | Open |
-
-## 18. Traceability to General Requirements
-
-Map each feature requirement to the baseline in `GENERAL_REQUIREMENTS.md`.
-
-| Feature Requirement ID | Related General Section(s) | Notes |
+| TR ID | Requirement | Acceptance criteria |
 | --- | --- | --- |
-| FR-001 | 6, 7.3, 7.5 | Example mapping |
+| TR-001 | Task creation/composition behavior | ... |
+| TR-002 | Runtime task loading/registration behavior | ... |
+| TR-003 | Task validation and failure behavior | ... |
 
-## 19. Approval Checklist
+## 6. UI Requirements (GUI and TUI)
 
-Before implementation starts, confirm:
+| UI ID | Surface (GUI/TUI/Both) | Requirement | Acceptance criteria |
+| --- | --- | --- | --- |
+| UI-001 | Both | Core simulation parity | Same result for equivalent inputs |
+| UI-002 | GUI | Help section update | Feature documented in GUI help |
+| UI-003 | TUI | Help/man update | Feature documented in TUI help/man |
 
-- [ ] Functional requirements are complete and testable.
-- [ ] NFR targets are measurable and agreed.
-- [ ] Security/privacy requirements are reviewed.
-- [ ] Architecture impact is documented and ADRs are linked.
-- [ ] Testing strategy and acceptance criteria are approved.
-- [ ] Rollout and rollback plans are defined.
-- [ ] Open questions have owners and due dates.
+## 7. Architecture and Implementation Constraints
+
+- MVC mapping:
+  - Model changes:
+  - View changes:
+  - Controller changes:
+- Framework (FW) usage notes:
+- Shared engine impact (GUI/TUI must use same engine):
+- Third-party library decision (library, reason, reliability/license/security check):
+- If custom code chosen instead of library, justification:
+
+## 8. Logging and Diagnostics
+
+| LOG ID | Event | Required level(s) | Required fields | Redaction needed |
+| --- | --- | --- | --- | --- |
+| LOG-001 | Simulation start/stop | INFO/DEBUG | target, run_id, result | Yes/No |
+| LOG-002 | Task create/load/register | INFO/DEBUG | task_id, source | Yes/No |
+| LOG-003 | Message send/receive | DEBUG | message_type, endpoint | Yes/No |
+
+- Default log level:
+- Runtime log-level override method:
+
+## 9. Portability and PC Compatibility
+
+Define where this feature must run.
+
+| OS | Version | Architecture | Runtime/Toolchain | Tested (Y/N) |
+| --- | --- | --- | --- | --- |
+| Linux | ... | x86_64/arm64 | ... | N |
+| Windows | ... | x86_64/arm64 | ... | N |
+| macOS | ... | x86_64/arm64 | ... | N |
+
+## 10. Testing and Validation
+
+| Test type | What must be validated | Owner | Pass criteria |
+| --- | --- | --- | --- |
+| Unit | Core logic and task behavior | Eng | All required tests pass |
+| Integration | `.h`/`ctypes`, task loading, engine flow | Eng | No critical failures |
+| End-to-end | Key GUI and TUI scenarios | Eng/QA | Scenario success criteria met |
+| Portability smoke | Runs on required PC matrix entries | Eng | Feature works on marked targets |
+
+## 11. Risks and Open Questions
+
+### 11.1 Risks
+
+| Risk ID | Description | Impact | Mitigation | Owner |
+| --- | --- | --- | --- | --- |
+| R-001 | ... | High/Med/Low | ... | ... |
+
+### 11.2 Open Questions
+
+| Question ID | Question | Owner | Status |
+| --- | --- | --- | --- |
+| Q-001 | ... | ... | Open |
+
+## 12. Definition of Done
+
+- [ ] Requirements are mapped to General Requirement IDs.
+- [ ] Functional requirements are testable and accepted.
+- [ ] GUI/TUI behavior and parity are defined.
+- [ ] Help/man documentation updates are included.
+- [ ] Logging requirements and redaction rules are defined.
+- [ ] Portability matrix entries and validation plan are defined.
+- [ ] Tests for unit/integration/e2e are listed and approved.

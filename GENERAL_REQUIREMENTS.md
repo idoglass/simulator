@@ -160,3 +160,4 @@ Create feature-specific requirement documents that reference this baseline and i
 - Exact API/data contract requirements
 - Concrete performance/security targets
 - Test scenarios mapped to requirements
+- Use `FEATURE_REQUIREMENTS_TEMPLATE.md` as the starting format for all feature specs

@@ -5,7 +5,7 @@
 - Status: Draft
 
 ## Feature Requirement
-Deliver a robust, generic, stateless simulator foundation.
+Deliver a robust, generic, stateless desktop simulator foundation.
 
 ## Acceptance Criteria
-- Core simulator flows run without coupling to one specific application model.
+- Core simulator flows run without coupling to one specific application model in desktop runtime mode.

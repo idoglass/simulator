@@ -5,11 +5,11 @@
 - Status: Draft
 
 ## Feature Requirement
-Support UDP and TCP protocols for simulation transport in the current project scope.
+Support UDP and TCP protocols for simulation transport in client and server modes in the current project scope.
 
 ## Acceptance Criteria
-- Simulator can send and receive simulation traffic over TCP.
-- Simulator can send and receive simulation traffic over UDP.
+- Simulator can send and receive simulation traffic over TCP in configured client and server modes.
+- Simulator can send and receive simulation traffic over UDP in configured client and server modes.
 - Protocol selection is configurable per simulation target or run configuration.
 
 ## Implementation Plan (MVP)

@@ -5,7 +5,7 @@
 - Status: Draft
 
 ## Feature Requirement
-Provide explicit portability compatibility matrix support for feature delivery.
+Provide explicit portability compatibility matrix support for feature delivery, with MVP focus on Windows and Linux.
 
 ## Acceptance Criteria
-- Feature docs include OS/architecture/runtime matrix and portability validation status.
+- Feature docs include OS/architecture/runtime matrix and portability validation status, including MVP validation for Windows and Linux.

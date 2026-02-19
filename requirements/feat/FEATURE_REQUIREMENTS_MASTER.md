@@ -11,30 +11,30 @@ This document creates one feature requirement entry for each general requirement
 | FR-GR-004 | GR-004 | Define project-wide architecture, reliability, security, testing, and governance requirements. | Feature specs reference architecture/NFR/governance constraints where applicable. | P0 |
 | FR-GR-005 | GR-005 | Maintain separate feature-specific requirements per feature. | Each implemented feature has its own requirements file under `requirements/feat/`. | P0 |
 | FR-GR-006 | GR-006 | Keep detailed UX/schema/payload/sprint planning out of baseline doc. | Detailed implementation details are documented only in feature-specific docs. | P1 |
-| FR-GR-007 | GR-007 | Deliver robust generic stateless simulator foundation. | Core simulator runs target flows without coupling to one specific application model. | P0 |
+| FR-GR-007 | GR-007 | Deliver robust generic stateless desktop simulator foundation. | Core simulator runs target flows without coupling to one specific application model in desktop runtime mode. | P0 |
 | FR-GR-008 | GR-008 | Support simulation of one or more applications per target up to validated limits. | Capacity limits are configured and tested; simulator processes multi-application message flows. | P0 |
 | FR-GR-009 | GR-009 | Drive simulation from `.h`/`ctypes` definitions plus registered tasks only. | Runs fail validation when message/task definitions are outside allowed sources. | P0 |
 | FR-GR-010 | GR-010 | Maintain traceability from requirements to implementation and validation artifacts. | Feature docs, commits, and tests include requirement mapping references. | P1 |
-| FR-GR-011 | GR-011 | Provide explicit portability compatibility matrix support. | Feature docs include OS/arch/runtime matrix and portability validation status. | P0 |
-| FR-GR-012 | GR-012 | Provide both GUI and TUI interfaces for simulator usage. | Feature behavior is available via both GUI and TUI entry points. | P0 |
+| FR-GR-011 | GR-011 | Provide explicit portability compatibility matrix support with MVP focus on Windows and Linux. | Feature docs include OS/arch/runtime matrix and MVP validation status for Windows and Linux. | P0 |
+| FR-GR-012 | GR-012 | Provide both GUI and TUI interfaces for simulator usage using designated frameworks. | Feature behavior is available via GUI (`py-gui`/`tk-mvc`) and TUI (Textual) entry points. | P0 |
 | FR-GR-019 | GR-019 | Accept target input and execute simulation flow for that target. | Simulation run requires target input and executes against selected target context. | P0 |
 | FR-GR-020 | GR-020 | Simulate send/receive message behavior with resource-bound scaling. | Multi-application message flows execute correctly within configured limits. | P0 |
 | FR-GR-021 | GR-021 | Enforce stateless execution boundary at application layer. | No mutable per-session/per-target state persists in process between requests. | P0 |
-| FR-GR-022 | GR-022 | Use `.h`/`ctypes` metadata for message structures/participants/flow rules. | Invalid type/field references are rejected during validation. | P0 |
+| FR-GR-022 | GR-022 | Use `.h`/`ctypes` metadata from repository and/or user-provided files for message structures/participants/flow rules. | Invalid type/field references are rejected during validation regardless of definition source. | P0 |
 | FR-GR-023 | GR-023 | Execute simulation actions only through registered tasks. | Engine rejects non-registered task execution requests. | P0 |
 | FR-GR-024 | GR-024 | Map feature requirements to Section 6/7 baseline requirements. | Each feature requirement item has mapped GR ID references. | P1 |
 | FR-GR-025 | GR-025 | Expose core simulation capabilities in both GUI and TUI. | Equivalent core operations are accessible in both interfaces. | P0 |
 | FR-GR-026 | GR-026 | Use one shared simulation engine for GUI and TUI. | GUI and TUI call shared engine/service APIs and produce equivalent results. | P0 |
 | FR-GR-027 | GR-027 | Support creation of user-defined tasks from existing registered tasks. | Task composition flow creates valid reusable tasks with unique task IDs. | P0 |
 | FR-GR-028 | GR-028 | Support runtime task loading and registration before execution. | New task definitions can be loaded, validated, and executed without restart. | P0 |
-| FR-GR-029 | GR-029 | Support recording traffic through proxy/capture mode and replaying captured runs. | Simulator can capture target traffic and replay the capture in simulation runs. | P0 |
-| FR-GR-030 | GR-030 | Support request/message matching rules and verification assertions. | Match rules and verification results are available with pass/fail details. | P0 |
-| FR-GR-031 | GR-031 | Support UDP and TCP protocols for simulation transport. | Simulator can send/receive simulation traffic over both UDP and TCP. | P0 |
+| FR-GR-029 | GR-029 | Support recording traffic through file-based proxy/capture mode and replaying captured runs. | Simulator can capture target traffic to files and replay captured files in simulation runs. | P0 |
+| FR-GR-030 | GR-030 | Support request/message matching rules and verification assertions with MVP count-based support. | Match rules and verification results are available with pass/fail details; count-based assertions are supported in MVP. | P0 |
+| FR-GR-031 | GR-031 | Support UDP and TCP protocols for simulation transport in client and server modes. | Simulator can send/receive simulation traffic over both UDP and TCP in configured client/server modes. | P0 |
 | FR-GR-038 | GR-038 | Keep code modular with clear ownership boundaries. | Modules and interfaces are documented; cross-module dependencies remain controlled. | P1 |
-| FR-GR-039 | GR-039 | Cover critical paths with unit/integration/end-to-end tests. | Required test suites exist and pass for feature-critical workflows. | P0 |
+| FR-GR-039 | GR-039 | Cover major components and critical workflows with automated tests. | Unit tests exist for major components and simple end-to-end tests pass for critical workflows; integration tests cover shared boundaries where applicable. | P0 |
 | FR-GR-040 | GR-040 | Enforce CI/CD gates for lint, tests, and security checks. | CI fails when lint/tests/security checks fail. | P0 |
 | FR-GR-057 | GR-057 | Publish user-facing UI docs via GUI Help and TUI help/man. | Feature usage appears in GUI help and TUI help/man with current examples. | P0 |
-| FR-GR-058 | GR-058 | Implement features under MVC architecture and designated FW constraints. | Feature design maps to MVC layers and follows framework standards. | P0 |
+| FR-GR-058 | GR-058 | Implement features under MVC architecture with `py-gui`/`tk-mvc` for GUI and Textual for TUI. | Feature design maps to MVC layers, follows framework standards, and submodule updates include compatibility validation. | P0 |
 | FR-GR-059 | GR-059 | Emit verbose lifecycle logs with configurable levels and redaction. | Required events are logged; log level is configurable; sensitive values are redacted. | P0 |
 | FR-GR-060 | GR-060 | Prefer reliable/common third-party libraries when suitable. | Library decision includes security/maintenance/license check; custom code is justified when selected. | P1 |
 | FR-GR-044 | GR-044 | Produce required architecture artifacts before implementation. | Feature references architecture artifacts (diagram/data/interface/deploy/risk/ADR) before coding starts. | P0 |

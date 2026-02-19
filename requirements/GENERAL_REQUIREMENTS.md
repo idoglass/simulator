@@ -15,41 +15,41 @@
 
 ## 3. Project Goals
 
-- **GR-007:** The project SHALL deliver a robust and generic stateless application.
+- **GR-007:** The project SHALL deliver a robust, generic, stateless desktop application.
 - **GR-008:** The application SHALL simulate, for a target, one or more applications by sending and receiving messages, up to configured and validated capacity limits.
 - **GR-009:** Simulation behavior SHALL be driven only by C type definitions (`ctypes`) from `.h` files and registered tasks (built-in or user-defined).
 - **GR-010:** Requirements, implementation, and validation artifacts SHALL remain traceable end-to-end.
-- **GR-011:** The simulator SHALL be portable across supported target environments defined by an explicit compatibility matrix (OS, architecture, and runtime/toolchain versions).
-- **GR-012:** The simulator SHALL provide both a graphical user interface (GUI) and a terminal user interface (TUI).
+- **GR-011:** The simulator SHALL be portable across supported target environments defined by an explicit compatibility matrix (OS, architecture, and runtime/toolchain versions); MVP SHALL support Windows and Linux.
+- **GR-012:** The simulator SHALL provide both a graphical user interface (GUI) and a terminal user interface (TUI), implemented with the designated Tkinter MVC framework (`py-gui`/`tk-mvc`) and Textual respectively.
 
 ## 6. Functional Requirement Categories (High-Level)
 
 - **GR-019:** The application SHALL receive a target and execute simulation flows for that target.
 - **GR-020:** The application SHALL simulate message send/receive behavior across one or more applications, constrained by configured and validated resource limits.
 - **GR-021:** The application SHALL remain stateless at the application layer during simulation execution and SHALL NOT persist mutable per-session or per-target execution state in process between requests.
-- **GR-022:** The application SHALL use only C type definitions (`ctypes`) from `.h` files to define message structures, participants, and simulation flow rules.
+- **GR-022:** The application SHALL use only C type definitions (`ctypes`) from `.h` files provided from repository-managed sources and/or user-provided files to define message structures, participants, and simulation flow rules.
 - **GR-023:** The application SHALL execute simulation behavior only through registered tasks.
 - **GR-024:** Feature-specific requirements SHALL map to one or more requirements in this section or Section 7.
 - **GR-025:** GUI and TUI interfaces SHALL expose the core simulation capabilities.
 - **GR-026:** GUI and TUI interfaces SHALL use the same underlying simulation engine and requirement model.
 - **GR-027:** The simulator SHALL provide a way to create user-defined tasks by composing or extending existing registered tasks.
 - **GR-028:** The simulator SHALL support loading and registering tasks at runtime prior to execution.
-- **GR-029:** The simulator SHALL support recording message traffic through a proxy/capture mode and replaying captured traffic in simulation runs.
-- **GR-030:** The simulator SHALL support request/message matching rules and verification assertions for expected interactions.
-- **GR-031:** The simulator SHALL support UDP and TCP protocols for simulation transport in the current project scope.
+- **GR-029:** The simulator SHALL support recording message traffic through a file-based proxy/capture mode and replaying captured traffic in simulation runs.
+- **GR-030:** The simulator SHALL support request/message matching rules and verification assertions for expected interactions; MVP SHALL support count-based verification assertions.
+- **GR-031:** The simulator SHALL support UDP and TCP protocols for simulation transport in client and server modes in the current project scope.
 
 ## 7. Non-Functional Requirements
 
 ### 7.5 Maintainability and Testability
 
 - **GR-038:** The codebase SHALL be modular with clear ownership boundaries.
-- **GR-039:** Automated testing SHALL include unit, integration, and end-to-end coverage for critical paths.
+- **GR-039:** Automated testing SHALL include unit tests for all major components and simple end-to-end coverage for critical workflows; integration tests SHOULD cover shared engine and transport boundaries.
 - **GR-040:** CI/CD quality gates SHALL include linting, test execution, and security checks.
 
 ### 7.6 Architecture, Documentation, and Logging Standards
 
 - **GR-057:** User-facing documentation for all UI capabilities SHALL be exposed through the GUI Help section and the TUI help/man section; relevant developer notes MAY be promoted from code comments after documentation review.
-- **GR-058:** The architecture SHALL follow the MVC pattern and use the designated framework (FW), with detailed framework standards defined in a separate architecture specification.
+- **GR-058:** The architecture SHALL follow the MVC pattern; GUI SHALL align with the designated framework (`py-gui` submodule using `tk-mvc`) and TUI SHALL align with Textual. Framework/submodule updates SHALL follow a documented workflow with compatibility validation.
 - **GR-059:** The application SHALL provide highly verbose logs for key lifecycle events (including simulation start/stop, task creation/loading, and message send/receive), with runtime-configurable log levels and mandatory redaction of sensitive data.
 - **GR-060:** When a reliable and commonly adopted third-party library is available and suitable, it SHALL be preferred over custom implementation, provided it meets security, maintenance, and license-compatibility requirements.
 

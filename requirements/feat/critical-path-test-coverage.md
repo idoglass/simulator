@@ -5,7 +5,8 @@
 - Status: Draft
 
 ## Feature Requirement
-Cover critical paths with unit, integration, and end-to-end tests.
+Cover major components and critical workflows with automated tests.
 
 ## Acceptance Criteria
-- Required test suites exist and pass for feature-critical workflows.
+- Unit tests exist for major components and simple end-to-end tests pass for critical workflows.
+- Integration tests cover shared engine and transport boundaries where applicable.

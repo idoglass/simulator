@@ -5,10 +5,10 @@
 - Status: Draft
 
 ## Feature Requirement
-Provide both GUI and TUI interfaces for simulator usage.
+Provide both GUI and TUI interfaces for simulator usage using designated frameworks.
 
 ## Acceptance Criteria
-- Feature behavior is available through both GUI and TUI entry points.
+- Feature behavior is available through GUI (`py-gui`/`tk-mvc`) and TUI (Textual) entry points.
 
 ## Implementation Plan (MVP)
 

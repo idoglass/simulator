@@ -179,3 +179,4 @@ These are intentionally co-located under `adapters/` because both connect extern
 - A-09 Contract mapping: `architecture/contract-mapping.md` (Done)
 - A-11 Transport spec: `architecture/transport-spec.md` (Done)
 - A-12 Verification spec: `architecture/verification-spec.md` (Done)
+- A-13 Configuration model: `architecture/config-model.md` (Done)

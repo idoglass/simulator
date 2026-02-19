@@ -34,6 +34,9 @@
 - **GR-026:** GUI and TUI interfaces SHALL use the same underlying simulation engine and requirement model.
 - **GR-027:** The simulator SHALL provide a way to create user-defined tasks by composing or extending existing registered tasks.
 - **GR-028:** The simulator SHALL support loading and registering tasks at runtime prior to execution.
+- **GR-029:** The simulator SHALL support recording message traffic through a proxy/capture mode and replaying captured traffic in simulation runs.
+- **GR-030:** The simulator SHALL support request/message matching rules and verification assertions for expected interactions.
+- **GR-031:** The simulator SHALL support UDP and TCP protocols for simulation transport in the current project scope.
 
 ## 7. Non-Functional Requirements
 

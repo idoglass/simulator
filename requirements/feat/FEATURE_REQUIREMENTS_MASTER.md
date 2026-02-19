@@ -27,6 +27,9 @@ This document creates one feature requirement entry for each general requirement
 | FR-GR-026 | GR-026 | Use one shared simulation engine for GUI and TUI. | GUI and TUI call shared engine/service APIs and produce equivalent results. | P0 |
 | FR-GR-027 | GR-027 | Support creation of user-defined tasks from existing registered tasks. | Task composition flow creates valid reusable tasks with unique task IDs. | P0 |
 | FR-GR-028 | GR-028 | Support runtime task loading and registration before execution. | New task definitions can be loaded, validated, and executed without restart. | P0 |
+| FR-GR-029 | GR-029 | Support recording traffic through proxy/capture mode and replaying captured runs. | Simulator can capture target traffic and replay the capture in simulation runs. | P0 |
+| FR-GR-030 | GR-030 | Support request/message matching rules and verification assertions. | Match rules and verification results are available with pass/fail details. | P0 |
+| FR-GR-031 | GR-031 | Support UDP and TCP protocols for simulation transport. | Simulator can send/receive simulation traffic over both UDP and TCP. | P0 |
 | FR-GR-038 | GR-038 | Keep code modular with clear ownership boundaries. | Modules and interfaces are documented; cross-module dependencies remain controlled. | P1 |
 | FR-GR-039 | GR-039 | Cover critical paths with unit/integration/end-to-end tests. | Required test suites exist and pass for feature-critical workflows. | P0 |
 | FR-GR-040 | GR-040 | Enforce CI/CD gates for lint, tests, and security checks. | CI fails when lint/tests/security checks fail. | P0 |

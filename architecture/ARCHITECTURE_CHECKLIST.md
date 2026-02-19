@@ -24,7 +24,7 @@ Architecture design stage is complete only when:
 | A-08 | Port contracts (interfaces) | `architecture/port-contracts.md` | GR-022, GR-023, GR-026, GR-031 | Interface definitions exist for transport, contracts, tasks, verification, capture/replay, events. | Done |
 | A-09 | Contract mapping rules (`.h` -> `ctypes`) | `architecture/contract-mapping.md` | GR-009, GR-022 | Mapping/validation rules, unsupported constructs, and error behavior are documented. | Done |
 | A-10 | Task format decision and versioning | `architecture/task-format.md` | GR-027, GR-028 | Task format chosen (JSON/YAML/other), schema versioning and compatibility rules defined. | Todo |
-| A-11 | Protocol behavior spec (TCP/UDP) | `architecture/transport-spec.md` | GR-031 | Client/server behavior, timeout/retry, error semantics, and framing assumptions are defined. | Todo |
+| A-11 | Protocol behavior spec (TCP/UDP) | `architecture/transport-spec.md` | GR-031 | Client/server behavior, timeout/retry, error semantics, and framing assumptions are defined. | Done |
 | A-12 | Verification spec (MVP count-based) | `architecture/verification-spec.md` | GR-030 | Count-based rules, pass/fail conditions, and mismatch reporting format are defined. | Todo |
 | A-13 | Configuration model | `architecture/config-model.md` | GR-011, GR-031 | Runtime config schema and per-target/per-run overrides are defined and validated. | Todo |
 | A-14 | Observability and redaction spec | `architecture/logging-observability.md` | GR-057, GR-059 | Required logs, fields, IDs, and redaction policy are defined. | Todo |

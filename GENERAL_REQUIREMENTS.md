@@ -16,7 +16,7 @@
 
 - **GR-007:** The project SHALL deliver a robust and generic stateless application.
 - **GR-008:** The application SHALL simulate, for a target, any number of applications by sending and receiving messages.
-- **GR-009:** Simulation behavior SHALL be driven only by MUG definitions and predefined actions.
+- **GR-009:** Simulation behavior SHALL be driven only by C type definitions (`ctypes`) from `.h` files and predefined actions.
 - **GR-010:** Requirements, implementation, and validation artifacts SHALL remain traceable end-to-end.
 
 ## 6. Functional Requirement Categories (High-Level)
@@ -24,7 +24,7 @@
 - **GR-019:** The application SHALL receive a target and execute simulation flows for that target.
 - **GR-020:** The application SHALL simulate message send/receive behavior across any number of applications, subject to deployed infrastructure limits.
 - **GR-021:** The application SHALL remain stateless at the application layer during simulation execution.
-- **GR-022:** The application SHALL use only MUG definitions to define message structures, participants, and simulation flow rules.
+- **GR-022:** The application SHALL use only C type definitions (`ctypes`) from `.h` files to define message structures, participants, and simulation flow rules.
 - **GR-023:** The application SHALL use only predefined actions to execute simulation behavior.
 - **GR-024:** Feature-specific requirements SHALL map to one or more requirements in this section or Section 7.5.
 

@@ -21,7 +21,7 @@ This is an example filled document based on `FEATURE_REQUIREMENTS_TEMPLATE.md`.
 - What this feature does: Allows users to load and register tasks at runtime from local task definition files, then execute those tasks in simulation flows.
 - Why this feature is needed: The simulator must support extensible behavior without requiring rebuild/restart for each new task.
 - Primary user outcome: Operator can add new simulation behavior quickly through GUI or TUI and run it immediately.
-- Mapped General Requirement IDs (from `GENERAL_REQUIREMENTS.md`): GR-009, GR-023, GR-025, GR-026, GR-027, GR-028, GR-057, GR-058, GR-059, GR-011
+- Mapped General Requirement IDs (from `../GENERAL_REQUIREMENTS.md`): GR-009, GR-023, GR-025, GR-026, GR-027, GR-028, GR-057, GR-058, GR-059, GR-011
 
 ## 2. Scope
 

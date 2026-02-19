@@ -22,7 +22,7 @@ Keep the document short and practical (typically 1-4 pages).
 - What this feature does:
 - Why this feature is needed:
 - Primary user outcome:
-- Mapped General Requirement IDs (from `GENERAL_REQUIREMENTS.md`):
+- Mapped General Requirement IDs (from `../GENERAL_REQUIREMENTS.md`):
 
 ## 2. Scope
 

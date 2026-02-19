@@ -63,6 +63,6 @@
 
 ## 12. Next Step
 
-- **GR-054:** Each feature SHALL have a dedicated requirements document based on `FEATURE_REQUIREMENTS_TEMPLATE.md`.
+- **GR-054:** Each feature SHALL have a dedicated requirements document based on `feat/FEATURE_REQUIREMENTS_TEMPLATE.md`.
 - **GR-055:** Feature requirements SHALL include user stories, acceptance criteria, API/data contract requirements, measurable NFR targets, and mapped test scenarios.
 - **GR-056:** Feature implementation SHALL begin only after feature requirements are reviewed and approved.

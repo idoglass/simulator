@@ -171,3 +171,5 @@ These are intentionally co-located under `adapters/` because both connect extern
 - A-01 System context: `architecture/context-diagram.md` (Done)
 - A-02 Component architecture: `architecture/component-diagram.md` (Done)
 - A-03 Happy-path sequence: `architecture/sequence-run.md` (Done)
+- A-04 Task-load sequence: `architecture/sequence-task-load.md` (Done)
+- A-05 Capture/replay sequence: `architecture/sequence-capture-replay.md` (Done)

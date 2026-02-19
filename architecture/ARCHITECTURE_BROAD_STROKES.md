@@ -157,14 +157,18 @@ These are intentionally co-located under `adapters/` because both connect extern
 - Submodule (`py-gui`) updates follow `skills/SUBMODULE_WORKFLOW.md`.
 - Every feature implementation updates requirement mapping and tests.
 
-## 7) Next Detailed Artifacts (Before Coding)
+## 7) Detailed Artifact Coverage (Before Coding)
 
-1. Context diagram (external actors + boundaries)
-2. Component diagram (engine/adapters/subsystems)
-3. Data/contract flow diagram (`.h` -> `ctypes` -> runtime models)
-4. Sequence diagram for one run (target + protocol + task + verify)
-5. Risk register and mitigation plan
-6. ADRs for key decisions (shared engine boundary, transport abstraction, task format)
+Core artifacts now include:
+
+1. Context diagram (`architecture/context-diagram.md`)
+2. Component diagram (`architecture/component-diagram.md`)
+3. Data flow overview (`architecture/data-flow-overview.md`)
+4. Runtime sequences (`architecture/sequence-run.md`, `architecture/sequence-task-load.md`, `architecture/sequence-capture-replay.md`)
+5. Interface inventory (`architecture/interface-inventory.md`)
+6. Deployment topology (`architecture/deployment-topology.md`)
+7. Risk register (`architecture/risk-register.md`)
+8. ADR set (`architecture/adr/ADR-*.md`)
 
 ## 8) Stage Progress (Current)
 
@@ -177,6 +181,11 @@ These are intentionally co-located under `adapters/` because both connect extern
 - A-07 Event model: `architecture/event-model.md` (Done)
 - A-08 Port contracts: `architecture/port-contracts.md` (Done)
 - A-09 Contract mapping: `architecture/contract-mapping.md` (Done)
+- A-10 Task format: `architecture/task-format.md` (Done)
 - A-11 Transport spec: `architecture/transport-spec.md` (Done)
 - A-12 Verification spec: `architecture/verification-spec.md` (Done)
 - A-13 Configuration model: `architecture/config-model.md` (Done)
+- A-14 Logging/observability spec: `architecture/logging-observability.md` (Done)
+- A-15 Test strategy: `architecture/test-strategy.md` (Done)
+- A-16 Risk register: `architecture/risk-register.md` (Done)
+- A-17 ADR set: `architecture/adr/ADR-*.md` (Done)

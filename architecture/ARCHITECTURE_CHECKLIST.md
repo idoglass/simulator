@@ -23,14 +23,25 @@ Architecture design stage is complete only when:
 | A-07 | Event model + event manager plan | `architecture/event-model.md` | GR-058, GR-059 | Event types, publish/subscribe points, and placement (`ports` + implementation) are defined. | Done |
 | A-08 | Port contracts (interfaces) | `architecture/port-contracts.md` | GR-022, GR-023, GR-026, GR-031 | Interface definitions exist for transport, contracts, tasks, verification, capture/replay, events. | Done |
 | A-09 | Contract mapping rules (`.h` -> `ctypes`) | `architecture/contract-mapping.md` | GR-009, GR-022 | Mapping/validation rules, unsupported constructs, and error behavior are documented. | Done |
-| A-10 | Task format decision and versioning | `architecture/task-format.md` | GR-027, GR-028 | Task format chosen (JSON/YAML/other), schema versioning and compatibility rules defined. | Todo |
+| A-10 | Task format decision and versioning | `architecture/task-format.md` | GR-027, GR-028 | Task format chosen (JSON/YAML/other), schema versioning and compatibility rules defined. | Done |
 | A-11 | Protocol behavior spec (TCP/UDP) | `architecture/transport-spec.md` | GR-031 | Client/server behavior, timeout/retry, error semantics, and framing assumptions are defined. | Done |
 | A-12 | Verification spec (MVP count-based) | `architecture/verification-spec.md` | GR-030 | Count-based rules, pass/fail conditions, and mismatch reporting format are defined. | Done |
 | A-13 | Configuration model | `architecture/config-model.md` | GR-011, GR-031 | Runtime config schema and per-target/per-run overrides are defined and validated. | Done |
-| A-14 | Observability and redaction spec | `architecture/logging-observability.md` | GR-057, GR-059 | Required logs, fields, IDs, and redaction policy are defined. | Todo |
-| A-15 | Test architecture plan | `architecture/test-strategy.md` | GR-039, GR-040 | Unit/integration/simple e2e scope and Windows/Linux validation plan are defined. | Todo |
-| A-16 | Risk register | `architecture/risk-register.md` | GR-044 | Top risks, impact, mitigation, and owners are documented. | Todo |
-| A-17 | ADR set for major decisions | `architecture/adr/ADR-*.md` | GR-044, GR-045 | Key decisions have ADRs (accepted/rejected options + rationale). | Todo |
+| A-14 | Observability and redaction spec | `architecture/logging-observability.md` | GR-057, GR-059 | Required logs, fields, IDs, and redaction policy are defined. | Done |
+| A-15 | Test architecture plan | `architecture/test-strategy.md` | GR-039, GR-040 | Unit/integration/simple e2e scope and Windows/Linux validation plan are defined. | Done |
+| A-16 | Risk register | `architecture/risk-register.md` | GR-044 | Top risks, impact, mitigation, and owners are documented. | Done |
+| A-17 | ADR set for major decisions | `architecture/adr/ADR-*.md` | GR-044, GR-045 | Key decisions have ADRs (accepted/rejected options + rationale). | Done |
+
+## GR-044 Explicit Artifact Coverage
+
+| GR-044 Required Artifact | Coverage Artifact |
+| --- | --- |
+| Context and component architecture diagrams | `architecture/context-diagram.md`, `architecture/component-diagram.md` |
+| Data model and data flow overview | `architecture/domain-model.md`, `architecture/data-flow-overview.md` |
+| Integration interface inventory (APIs/events/files) | `architecture/interface-inventory.md`, `architecture/port-contracts.md`, `architecture/event-model.md` |
+| Deployment topology and environment strategy | `architecture/deployment-topology.md`, `architecture/config-model.md` |
+| Risk register with mitigations and owners | `architecture/risk-register.md` |
+| ADRs for major tradeoffs | `architecture/adr/ADR-001-shared-simulation-engine.md` through `ADR-005-transport-off-ui-thread.md` |
 
 ## Checklist (Recommended)
 

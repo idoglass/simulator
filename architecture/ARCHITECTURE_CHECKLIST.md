@@ -19,8 +19,8 @@ Architecture design stage is complete only when:
 | A-03 | Runtime sequence (happy path) | `architecture/sequence-run.md` | GR-019, GR-020, GR-023, GR-026 | End-to-end run flow from target selection to result is documented. | Done |
 | A-04 | Runtime sequence (task load) | `architecture/sequence-task-load.md` | GR-027, GR-028 | Runtime task load/register flow and validation points are documented. | Done |
 | A-05 | Runtime sequence (capture/replay) | `architecture/sequence-capture-replay.md` | GR-029 | File-based capture and replay flow is documented and deterministic assumptions listed. | Done |
-| A-06 | Domain model | `architecture/domain-model.*` | GR-021, GR-023, GR-030 | Core entities and lifecycle states are defined, including stateless boundary notes. | Todo |
-| A-07 | Event model + event manager plan | `architecture/event-model.*` | GR-058, GR-059 | Event types, publish/subscribe points, and placement (`ports` + implementation) are defined. | Todo |
+| A-06 | Domain model | `architecture/domain-model.md` | GR-021, GR-023, GR-030 | Core entities and lifecycle states are defined, including stateless boundary notes. | Done |
+| A-07 | Event model + event manager plan | `architecture/event-model.md` | GR-058, GR-059 | Event types, publish/subscribe points, and placement (`ports` + implementation) are defined. | Done |
 | A-08 | Port contracts (interfaces) | `architecture/port-contracts.md` | GR-022, GR-023, GR-026, GR-031 | Interface definitions exist for transport, contracts, tasks, verification, capture/replay, events. | Done |
 | A-09 | Contract mapping rules (`.h` -> `ctypes`) | `architecture/contract-mapping.md` | GR-009, GR-022 | Mapping/validation rules, unsupported constructs, and error behavior are documented. | Todo |
 | A-10 | Task format decision and versioning | `architecture/task-format.md` | GR-027, GR-028 | Task format chosen (JSON/YAML/other), schema versioning and compatibility rules defined. | Todo |

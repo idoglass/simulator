@@ -42,6 +42,13 @@
 - **GR-039:** Automated testing SHALL include unit, integration, and end-to-end coverage for critical paths.
 - **GR-040:** CI/CD quality gates SHALL include linting, test execution, and security checks.
 
+### 7.6 Architecture, Documentation, and Logging Standards
+
+- **GR-057:** User interface documentation, including relevant UI behavior notes derived from code comments, SHALL be exposed through the GUI Help section and the TUI help/man section.
+- **GR-058:** The architecture SHALL follow the MVC pattern and use the designated framework (FW), with detailed framework standards defined in a separate architecture specification.
+- **GR-059:** The application SHALL produce highly verbose logs for key lifecycle events, including simulation start/stop, task creation/loading, and message send/receive operations.
+- **GR-060:** When a reliable and commonly adopted third-party library is available and suitable, it SHALL be preferred over building a custom implementation.
+
 ## 8. Architecture Definition Requirements
 
 - **GR-044:** Before implementation starts, the following artifacts SHALL be produced and reviewed:

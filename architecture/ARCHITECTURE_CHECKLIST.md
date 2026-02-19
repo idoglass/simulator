@@ -21,7 +21,7 @@ Architecture design stage is complete only when:
 | A-05 | Runtime sequence (capture/replay) | `architecture/sequence-capture-replay.md` | GR-029 | File-based capture and replay flow is documented and deterministic assumptions listed. | Done |
 | A-06 | Domain model | `architecture/domain-model.*` | GR-021, GR-023, GR-030 | Core entities and lifecycle states are defined, including stateless boundary notes. | Todo |
 | A-07 | Event model + event manager plan | `architecture/event-model.*` | GR-058, GR-059 | Event types, publish/subscribe points, and placement (`ports` + implementation) are defined. | Todo |
-| A-08 | Port contracts (interfaces) | `architecture/port-contracts.md` | GR-022, GR-023, GR-026, GR-031 | Interface definitions exist for transport, contracts, tasks, verification, capture/replay, events. | Todo |
+| A-08 | Port contracts (interfaces) | `architecture/port-contracts.md` | GR-022, GR-023, GR-026, GR-031 | Interface definitions exist for transport, contracts, tasks, verification, capture/replay, events. | Done |
 | A-09 | Contract mapping rules (`.h` -> `ctypes`) | `architecture/contract-mapping.md` | GR-009, GR-022 | Mapping/validation rules, unsupported constructs, and error behavior are documented. | Todo |
 | A-10 | Task format decision and versioning | `architecture/task-format.md` | GR-027, GR-028 | Task format chosen (JSON/YAML/other), schema versioning and compatibility rules defined. | Todo |
 | A-11 | Protocol behavior spec (TCP/UDP) | `architecture/transport-spec.md` | GR-031 | Client/server behavior, timeout/retry, error semantics, and framing assumptions are defined. | Todo |

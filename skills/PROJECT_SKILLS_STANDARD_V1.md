@@ -5,7 +5,7 @@ This standard is tailored to current project decisions in `PROJECT_DISCOVERY_ANS
 ## 1) Stack Baseline
 
 - Language: **Python**
-- GUI: **Tkinter-based MVC framework** (repo reference pending)
+- GUI: **Tkinter-based MVC framework** via submodule `py-gui` (`tk-mvc`)
 - TUI: **Textual**
 - Runtime: **Desktop only**
 - Protocols in MVP: **TCP + UDP** (client + server)
@@ -36,7 +36,24 @@ This standard is tailored to current project decisions in `PROJECT_DISCOVERY_ANS
 6. **Python typing discipline**  
    Public interfaces and domain models SHOULD use type hints; `Protocol`/ABC for transport and registry contracts.
 
-## 3) Python Implementation Best Practices
+## 3) Framework Integration Rules (`py-gui` / `tk-mvc`)
+
+1. **Submodule ownership rule**  
+   Treat `py-gui` as an upstream dependency. Prefer implementing simulator features in this project first; modify framework code only when reusable framework changes are necessary.
+
+2. **Change-tracking rule**  
+   If framework changes are needed, update in `py-gui`, then update the submodule pointer in this repo with a clear commit message referencing the framework change.
+
+3. **Framework usage rule**  
+   Use `tk-mvc` App lifecycle, MVC base classes, and binding flow. Avoid bypassing framework conventions with ad hoc UI wiring.
+
+4. **Task runtime rule**  
+   For GUI-side task orchestration, align with framework task abstractions (Task protocol, TaskRegistry, TaskRunner, Scheduler, dynamic loader) while keeping simulator domain rules in shared services.
+
+5. **Scaffolding rule**  
+   For new GUI MVC surfaces, prefer framework CLI scaffolding (`add-model`, `add-view`, `add-controller`) to keep structure consistent.
+
+## 4) Python Implementation Best Practices
 
 - Keep Tkinter operations on the UI thread; run blocking network/file operations off the UI thread.
 - Keep Textual command/view logic thin; delegate domain behavior to shared services.
@@ -44,7 +61,7 @@ This standard is tailored to current project decisions in `PROJECT_DISCOVERY_ANS
 - Use structured logs with correlation IDs (`run_id`, `task_id`, `target_id`).
 - Redact sensitive values by default in logs and captured artifacts.
 
-## 4) Protocol and Message Rules
+## 5) Protocol and Message Rules
 
 - MVP transport support SHALL include:
   - TCP send/receive (client and server behavior)
@@ -52,14 +69,14 @@ This standard is tailored to current project decisions in `PROJECT_DISCOVERY_ANS
 - Protocol selection SHALL be explicit per run/target configuration.
 - Message contracts SHALL be validated against `.h`/`ctypes` definitions before execution.
 
-## 5) Task, Matching, and Replay Rules
+## 6) Task, Matching, and Replay Rules
 
 - Runtime task loading SHALL validate input before registration.
 - Task registration SHALL be atomic (no partial state on failure).
 - Verification SHALL support count-based assertions in MVP.
 - Capture/replay SHALL be file-based and reproducible for the same input/task version context.
 
-## 6) Code Smell Rejection List (Blocker)
+## 7) Code Smell Rejection List (Blocker)
 
 Changes SHOULD be rejected if they introduce:
 
@@ -69,8 +86,10 @@ Changes SHOULD be rejected if they introduce:
 - Protocol-specific branches scattered through controllers/views
 - Runtime task loading path that bypasses validation
 - Logging without redaction consideration
+- Framework core edits in submodule without upstream traceability
+- Tkinter/Textual widget logic leaking into domain/service modules
 
-## 7) Testing and Quality Gates
+## 8) Testing and Quality Gates
 
 Minimum quality bar:
 
@@ -87,7 +106,11 @@ Minimum quality bar:
    - tests
    - security/dependency checks
 
-## 8) MVP Review Checklist (Use in PRs)
+4. Framework integration smoke:
+   - GUI flow works with current submodule commit
+   - TUI flow remains unaffected by GUI framework updates
+
+## 9) MVP Review Checklist (Use in PRs)
 
 - [ ] Change preserves shared engine parity across GUI and TUI.
 - [ ] MVC boundaries are respected.
@@ -98,8 +121,8 @@ Minimum quality bar:
 - [ ] Capture/replay file workflow (if touched) remains deterministic.
 - [ ] Logging remains verbose + redacted.
 - [ ] Windows and Linux impact considered.
+- [ ] If `py-gui` changed, submodule pointer update and rationale are documented.
 
-## 9) Pending Decisions
+## 10) Pending Decisions
 
-- Final GUI framework reference repository details.
 - Task definition format selection (JSON/YAML/other).

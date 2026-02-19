@@ -22,9 +22,11 @@ Use this checklist in design reviews and pull requests.
 - [ ] **Feature envy** where classes overreach into others' internals.
 - [ ] **Inconsistent error handling** (exceptions in one path, return codes in another).
 - [ ] **No deterministic IDs/correlation** in logs and run artifacts.
+- [ ] **Submodule drift**: framework changed locally without clear upstream trace and pointer update rationale.
 
 ## C) Best Practices for This Project Type
 
+- [ ] Keep `py-gui` framework integration traceable via submodule commit updates.
 - [ ] Validate `.h` / `ctypes` contracts before task registration.
 - [ ] Reject unknown message fields/types early with actionable errors.
 - [ ] Keep task registry operations atomic (no partial registration on failure).
@@ -41,3 +43,4 @@ Use this checklist in design reviews and pull requests.
 - [ ] Logging added without redaction consideration.
 - [ ] Runtime-loaded tasks bypass validation.
 - [ ] New dependency added without reliability/license/security rationale.
+- [ ] `py-gui` submodule changed without explicit reason and compatibility note.

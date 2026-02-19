@@ -9,6 +9,10 @@ This folder defines generic engineering skills for message-simulation tools like
 - TCP/UDP transport support
 - capture/replay and interaction verification
 
+Project-specific context now includes the `py-gui` submodule (`tk-mvc` framework) located at:
+
+- `../py-gui`
+
 ## Files
 
 - `GENERIC_SKILLS_FOR_SIMULATOR_PROJECT.md`  

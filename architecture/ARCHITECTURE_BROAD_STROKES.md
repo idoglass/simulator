@@ -176,3 +176,4 @@ These are intentionally co-located under `adapters/` because both connect extern
 - A-06 Domain model: `architecture/domain-model.md` (Done)
 - A-07 Event model: `architecture/event-model.md` (Done)
 - A-08 Port contracts: `architecture/port-contracts.md` (Done)
+- A-09 Contract mapping: `architecture/contract-mapping.md` (Done)

@@ -52,6 +52,10 @@ class ContractPort(Protocol):
 **Behavior notes**
 - Accepts repository-managed and user-provided `.h` sources.
 - Fails fast on unknown type/field references.
+- Supports dual input entry types:
+  - A: generated ctypes Python directory
+  - B: raw `.h` directory
+- Both entry types feed the same normalize+validate pipeline (`architecture/contract-mapping.md`).
 
 **Plain-language explanation**
 - This is the gatekeeper for message shapes.

@@ -14,10 +14,10 @@
 
 ## 3. Project Goals
 
-- **GR-007:** The architecture SHALL support incremental feature delivery without major rewrites.
-- **GR-008:** The system SHALL support production operation with measurable service-level objectives.
-- **GR-009:** Requirements, implementation, and validation artifacts SHALL remain traceable end-to-end.
-- **GR-010:** Design decisions SHALL prioritize maintainability, clear ownership boundaries, and operational safety.
+- **GR-007:** The project SHALL deliver a robust and generic stateless application.
+- **GR-008:** The application SHALL simulate, for a target, any number of applications by sending and receiving messages.
+- **GR-009:** Simulation behavior SHALL be driven only by MUG definitions and predefined actions.
+- **GR-010:** Requirements, implementation, and validation artifacts SHALL remain traceable end-to-end.
 
 ## 6. Functional Requirement Categories (High-Level)
 

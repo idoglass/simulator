@@ -30,20 +30,15 @@ Define UI-layer behavior and parity rules for configuration, execution, monitori
 
 ## 5. TUI Design Notes
 
-- Command or menu-driven CRUD.
 - Live run status pane with event stream.
-- Periodic toggle command/action:
-  - example intent: `periodic set <task_id> on|off`
 - Immediate feedback line with task runtime state.
 
 ## 6. Parity Checklist
 
 Both GUI and TUI must support:
 
-- entity CRUD
 - sequence execution
 - response verification result view
-- periodic ON/OFF control
 - error-code visibility
 - run summary access
 

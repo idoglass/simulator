@@ -1,0 +1,19 @@
+{
+  "capture_schema_version": "1.0.0",
+  "capture_id": "cap-4d7bc9a91ce0",
+  "created_at": "2026-02-20T07:42:09.107185+00:00",
+  "producer": {
+    "app_name": "simulator",
+    "app_version": "0.1.0"
+  },
+  "context": {
+    "run_id": "test-run-001",
+    "target_id": "default-target",
+    "task_id": "ping-smoke",
+    "protocol": "tcp"
+  },
+  "interactions": [],
+  "transport_errors": [
+    "TRANSPORT_ERROR:[Errno 1] Operation not permitted"
+  ]
+}

@@ -2,7 +2,7 @@
 
 - Source GR ID: GR-031
 - Priority: P0
-- Status: Draft
+- Status: Implemented
 
 ## Feature Requirement
 Support UDP and TCP protocols for simulation transport in client and server modes in the current project scope.
@@ -18,3 +18,6 @@ Support UDP and TCP protocols for simulation transport in client and server mode
 2. Implement client and server mode behavior for both protocols.
 3. Add per-target/run protocol selection in runtime configuration.
 4. Add protocol smoke tests for TCP and UDP send/receive paths.
+
+## Implementation
+- **TransportPort** in domain/ports; **CompositeTransportAdapter** dispatches to **TcpTransportAdapter** and **UdpTransportAdapter** (adapters/transport/tcp, udp). Client and server modes for both; protocol selectable per run. Wired in bootstrap; workflow calls transport.execute(target, protocol, messages, timeout_ms).

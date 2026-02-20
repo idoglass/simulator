@@ -1,0 +1,19 @@
+{
+  "capture_schema_version": "1.0.0",
+  "capture_id": "cap-fafb9ed6fa11",
+  "created_at": "2026-02-20T07:44:32.494436+00:00",
+  "producer": {
+    "app_name": "simulator",
+    "app_version": "0.1.0"
+  },
+  "context": {
+    "run_id": "run-d648c06d",
+    "target_id": "default-target",
+    "task_id": "ping-smoke",
+    "protocol": "tcp"
+  },
+  "interactions": [],
+  "transport_errors": [
+    "TRANSPORT_CONNECTION_REFUSED"
+  ]
+}

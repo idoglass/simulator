@@ -1,0 +1,19 @@
+{
+  "capture_schema_version": "1.0.0",
+  "capture_id": "cap-5f966fb95d10",
+  "created_at": "2026-02-20T07:42:09.108853+00:00",
+  "producer": {
+    "app_name": "simulator",
+    "app_version": "0.1.0"
+  },
+  "context": {
+    "run_id": "r2",
+    "target_id": "default-udp",
+    "task_id": "ping-smoke",
+    "protocol": "udp"
+  },
+  "interactions": [],
+  "transport_errors": [
+    "TRANSPORT_ERROR:[Errno 1] Operation not permitted"
+  ]
+}

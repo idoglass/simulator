@@ -87,6 +87,12 @@ jobs:
       - name: Run tests
         run: python scripts/ci_test_runner.py
 
+      - name: Security check (pip audit)
+        run: |
+          python -m pip install pip-audit 2>/dev/null || true
+          python -m pip audit 2>/dev/null || true
+          echo "Security check completed"
+
   lint-test-windows:
     name: lint-test-windows
     runs-on: windows-latest

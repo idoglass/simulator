@@ -1,10 +1,10 @@
-# Software Requirements Specification (SRS) - Draft v0.2
+# Software Requirements Specification (SRS) - Draft v0.2.1
 
 ## Document Metadata
 
 - Product: Simulator
 - Document: `requirements/SRS_DRAFT.md`
-- Version: 0.2
+- Version: 0.2.1
 - Status: Draft
 - Date: 2026-02-20
 
@@ -29,6 +29,8 @@ The simulator SHALL provide:
 5. GUI and TUI interfaces backed by one shared simulation engine.
 6. Real-time action visibility during execution.
 7. CRUD support for all primary entities.
+8. Optional periodic task execution that runs continuously in parallel with other tasks.
+9. UI controls to switch periodic tasks on and off at runtime.
 
 ## 3. In-Scope Entities and Minimum Data Model
 
@@ -37,12 +39,13 @@ The simulator SHALL provide:
 | SimulatedApplication | `app_id`, `app_name` | `app_name` must be unique in workspace. |
 | TargetDefinition | `target_id`, `target_name`, `application_ref`, `transport_ref` | A target belongs to one application context. |
 | ContractDefinition | `contract_id`, `application_ref`, `source_type`, `source_path`, `version` | `source_type` in `{repo_h, user_h}`. |
-| TaskDefinition | `task_id`, `application_ref`, `task_name`, `registration_type`, `task_ref` | `registration_type` in `{built_in, runtime_loaded}`. |
+| TaskDefinition | `task_id`, `application_ref`, `task_name`, `registration_type`, `task_ref`, `execution_mode`, `periodic_config` | `registration_type` in `{built_in, runtime_loaded}`; `execution_mode` in `{oneshot, periodic}`. |
 | TransportDefinition | `transport_id`, `application_ref`, `protocol`, `mode`, `local_endpoint`, `remote_endpoint` | `protocol` in `{tcp, udp}`; `mode` in `{client, server}`. |
 | MessageDefinition | `message_id`, `target_ref`, `contract_ref`, `message_type`, `payload_binding` | `payload_binding` must map to `.h`/`ctypes` model. |
 | ExpectedResponse | `expectation_id`, `message_ref`, `match_rule`, `assertion` | MVP assertion must include count-based support. |
 | SequenceDefinition | `sequence_id`, `application_ref`, `sequence_name`, `steps`, `failure_policy` | `steps` is ordered list of step references. |
 | SequenceStep | `step_id`, `sequence_ref`, `order_index`, `message_ref`, `expectation_ref` | `order_index` starts at 1 and must be unique per sequence. |
+| PeriodicTaskRuntime | `runtime_id`, `task_ref`, `enabled`, `interval_ms`, `last_run_at` | `interval_ms` must be positive when enabled. |
 
 ## 4. Functional Requirements
 
@@ -64,6 +67,9 @@ The simulator SHALL provide:
 | SRS-FR-014 | The GUI SHALL show execution actions as they happen. | Action timeline updates during run and includes at minimum: run start, step send, step verify, run end. | GR-059 |
 | SRS-FR-015 | The system SHALL emit structured lifecycle logs with sensitive data redaction. | Required lifecycle events are logged; sensitive fields are redacted per policy. | GR-059 |
 | SRS-FR-016 | The simulator SHALL support TCP/UDP transport in client/server modes. | Valid configurations execute on supported protocol/mode combinations. | GR-031 |
+| SRS-FR-017 | The system SHALL allow a task to be configured as periodic and continuously executed. | When periodic mode is enabled, the task executes repeatedly at configured interval until turned off or run context ends. | GR-020, GR-023 |
+| SRS-FR-018 | The system SHALL execute enabled periodic tasks in parallel with other task/sequence execution. | Periodic task execution continues while foreground sequence steps run; foreground flow is not blocked by scheduler loop. | GR-020, GR-023, GR-026 |
+| SRS-FR-019 | The system SHALL expose runtime on/off controls for periodic task execution. | User can switch periodic task ON/OFF from UI; state change takes effect without app restart. | GR-025, GR-026 |
 
 ## 5. Sequence Execution Semantics
 
@@ -76,6 +82,9 @@ The simulator SHALL provide:
    - `COMPLETE_WITH_FAILURES` when failure policy is `continue_on_fail` and at least one step fails.
 5. Default `failure_policy` is `stop_on_fail`.
 6. Retry and timeout policy is in scope but exact numeric defaults are TBD in v0.3.
+7. Enabled periodic tasks may run before, during, and after sequence execution within the same run context.
+8. Periodic execution is independent of sequence step ordering and runs on scheduler interval.
+9. Switching a periodic task OFF stops future iterations; an in-flight iteration is allowed to finish gracefully.
 
 ## 6. Response Verification Rules (MVP)
 
@@ -91,6 +100,7 @@ The simulator SHALL provide:
    - expected rule summary
    - observed response summary (or timeout/no response)
    - failure reason code
+5. Count-based assertions SHALL be applicable to responses produced by periodic tasks.
 
 ## 7. Transport Requirements
 
@@ -106,6 +116,9 @@ The simulator SHALL provide:
 2. Task execution SHALL be restricted to registered tasks.
 3. Runtime-loaded tasks SHALL be validated before use in sequence execution.
 4. Contract/task validation failures SHALL prevent run start.
+5. Periodic task configuration SHALL include a positive interval (`interval_ms > 0`).
+6. A periodic task MAY be switched on/off during an active run.
+7. Invalid periodic configuration SHALL fail validation and SHALL NOT start scheduler execution.
 
 ## 9. UI Requirements (GUI and TUI)
 
@@ -116,6 +129,9 @@ The simulator SHALL provide:
 | SRS-UI-003 | TUI | TUI shall expose equivalent core configuration and run capabilities. | User can define/run/verify equivalent flows via TUI commands/screens. |
 | SRS-UI-004 | Both | GUI and TUI shall use one shared engine. | Equivalent definitions yield equivalent pass/fail outcomes. |
 | SRS-UI-005 | Both | User help documentation shall exist in GUI Help and TUI help/man. | Help includes target/message/sequence/verification/task/transport usage. |
+| SRS-UI-006 | GUI | GUI shall provide an ON/OFF switch for each periodic-capable task. | User can toggle task state and see current enabled/disabled state immediately. |
+| SRS-UI-007 | TUI | TUI shall provide command/action to turn periodic tasks ON/OFF. | User can toggle state from TUI and receive immediate state feedback. |
+| SRS-UI-008 | Both | UI shall display periodic task runtime status. | UI shows at minimum: enabled state, interval, and last-run timestamp. |
 
 ## 10. Statelessness Boundary
 
@@ -145,6 +161,7 @@ The simulator SHALL provide:
 | SRS-NFR-003 | Architecture consistency | GUI/TUI use shared engine and MVC boundaries. | GR-026, GR-058 |
 | SRS-NFR-004 | Testability | Unit tests for major components and simple e2e for critical flows. | GR-039 |
 | SRS-NFR-005 | CI quality gates | Lint and tests required in CI quality pipeline. | GR-040 |
+| SRS-NFR-006 | Concurrency behavior | Periodic scheduler must not block primary sequence execution path. | GR-020, GR-039 |
 
 ## 13. Validation and Test Scenarios (High Level)
 
@@ -157,6 +174,9 @@ The simulator SHALL provide:
 | SRS-TEST-005 | Execute same scenario via GUI and TUI. | Equivalent outcome and verification summary. |
 | SRS-TEST-006 | Configure invalid transport endpoint. | Validation fails with TRANSPORT_ERROR. |
 | SRS-TEST-007 | Run on Linux and Windows smoke path. | Core sequence execution is successful on both OS targets. |
+| SRS-TEST-008 | Enable one periodic task and run a sequence in parallel. | Periodic task continues to execute while sequence completes. |
+| SRS-TEST-009 | Switch periodic task OFF during execution. | No new periodic iterations start after OFF is applied. |
+| SRS-TEST-010 | Enable two periodic tasks with different intervals. | Both execute in parallel without blocking foreground sequence flow. |
 
 ## 14. Traceability Map to General Requirements
 
@@ -165,9 +185,9 @@ The simulator SHALL provide:
 | SRS-FR-001..SRS-FR-004 | GR-019, GR-020, GR-025 |
 | SRS-FR-005..SRS-FR-009 | GR-008, GR-019, GR-020, GR-030 |
 | SRS-FR-010..SRS-FR-012 | GR-009, GR-022, GR-023, GR-028 |
-| SRS-FR-013..SRS-FR-016 | GR-012, GR-025, GR-026, GR-031, GR-059 |
-| SRS-UI-001..SRS-UI-005 | GR-012, GR-025, GR-026, GR-057 |
-| SRS-NFR-001..SRS-NFR-005 | GR-011, GR-039, GR-040, GR-058, GR-059 |
+| SRS-FR-013..SRS-FR-019 | GR-012, GR-020, GR-023, GR-025, GR-026, GR-031, GR-059 |
+| SRS-UI-001..SRS-UI-008 | GR-012, GR-025, GR-026, GR-057 |
+| SRS-NFR-001..SRS-NFR-006 | GR-011, GR-020, GR-039, GR-040, GR-058, GR-059 |
 
 ## 15. Open Items for Next Revision (v0.3)
 
@@ -176,3 +196,4 @@ The simulator SHALL provide:
 3. Define full field-level schema (types, ranges, defaults) for all entities.
 4. Add measurable capacity/performance targets.
 5. Add full test matrix and pass thresholds.
+6. Define overlap policy for periodic tasks when an interval fires during in-flight execution.

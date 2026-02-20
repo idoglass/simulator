@@ -28,6 +28,10 @@ It is intentionally split into:
 3. `supporting/03-observability-and-nfr-design.md`
 4. `supporting/04-test-traceability-and-quality-gates.md`
 
+### Planning Backlog
+
+1. `implementation-tickets.md`
+
 ## Suggested Reading Order
 
 1. Core 01 -> Core 07

@@ -18,6 +18,19 @@
 - Shared engine impact (GUI/TUI parity):
 - Transport impact (TCP/UDP/client/server):
 
+## Architecture Conformance (Required)
+
+- [ ] I completed the mapping checklist in `architecture/ARCHITECTURE_CONFORMANCE_CHECKLIST.md`
+- [ ] I mapped changed code areas to architecture artifacts
+- [ ] I mapped changed code areas to requirement IDs (GR IDs)
+- [ ] I declared ADR impact (`None` or affected `ADR-xxx`)
+
+Architecture mapping table:
+
+| Changed Area | Architecture Artifact(s) | Requirement ID(s) | ADR Impact | Notes |
+| --- | --- | --- | --- | --- |
+| | | | | |
+
 ## Test Evidence
 
 - [ ] Unit tests added/updated for major impacted components

@@ -37,10 +37,37 @@ jobs:
             python scripts/validate_requirements.py
           fi
 
+  architecture-boundary-guard:
+    name: architecture-boundary-guard
+    runs-on: ubuntu-latest
+    needs: req-check
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Enforce architecture boundary rules
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            python scripts/architecture_boundary_check.py \
+              --base-ref "${{ github.event.pull_request.base.sha }}" \
+              --head-ref "${{ github.event.pull_request.head.sha }}"
+          else
+            python scripts/architecture_boundary_check.py
+          fi
+
   lint-test-linux:
     name: lint-test-linux
     runs-on: ubuntu-latest
-    needs: req-check
+    needs:
+      - req-check
+      - architecture-boundary-guard
     steps:
       - name: Checkout (with submodules)
         uses: actions/checkout@v4
@@ -63,7 +90,9 @@ jobs:
   lint-test-windows:
     name: lint-test-windows
     runs-on: windows-latest
-    needs: req-check
+    needs:
+      - req-check
+      - architecture-boundary-guard
     steps:
       - name: Checkout (with submodules)
         uses: actions/checkout@v4

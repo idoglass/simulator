@@ -1,0 +1,49 @@
+{
+  "config_version": "1",
+  "app": {
+    "mode": "tui",
+    "log_level": "INFO"
+  },
+  "compatibility": {
+    "supported_os": [
+      "windows",
+      "linux"
+    ],
+    "supported_arch": [
+      "x86_64"
+    ],
+    "python_version_range": ">=3.11,<3.14"
+  },
+  "targets": [
+    {
+      "target_id": "target-a",
+      "name": "Target A",
+      "transport": {
+        "protocol": "tcp",
+        "mode": "client",
+        "host": "127.0.0.1",
+        "port": 9000,
+        "framing": {
+          "id": "length-prefixed"
+        },
+        "timeouts": {
+          "connect_timeout_ms": 1000,
+          "read_timeout_ms": 1000,
+          "write_timeout_ms": 1000
+        },
+        "retries": {
+          "max_retries": 1,
+          "retry_backoff_ms": 100
+        }
+      },
+      "contracts": {
+        "source_ref": "tests/fixtures/contracts/raw",
+        "entry_type": "h_dir"
+      },
+      "defaults": {
+        "task_id": "ping-smoke",
+        "capture_enabled": false
+      }
+    }
+  ]
+}

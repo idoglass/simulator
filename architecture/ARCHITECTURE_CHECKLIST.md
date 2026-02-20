@@ -47,7 +47,7 @@ Architecture design stage is complete only when:
 
 | ID | Item | Artifact | Done Criteria | Status |
 | --- | --- | --- | --- | --- |
-| R-01 | Error code catalog | `architecture/error-codes.md` | Error families and user-facing messages are standardized. | Todo |
+| R-01 | Error code catalog | `architecture/error-codes.md` | Error families and user-facing messages are standardized. | Done |
 | R-02 | Dependency policy | `architecture/dependency-policy.md` | Library selection/security/license rules are explicit. | Todo |
 | R-03 | Performance budget | `architecture/performance-budget.md` | Initial latency/throughput targets and measurement approach are defined. | Todo |
 

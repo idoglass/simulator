@@ -51,3 +51,7 @@ sequenceDiagram
 ## Requirement Mapping
 
 - GR-029, GR-030, GR-031, GR-059
+
+## Related Artifact
+
+- `architecture/capture-schema-versioning.md`

@@ -14,6 +14,9 @@ GENERAL_REQ = ROOT / "requirements" / "GENERAL_REQUIREMENTS.md"
 MASTER_REQ = ROOT / "requirements" / "feat" / "FEATURE_REQUIREMENTS_MASTER.md"
 INDEX_REQ = ROOT / "requirements" / "feat" / "INDEX.md"
 
+# FR-GR-001: baseline document must exist and be referenced as baseline in feature specs
+BASELINE_REF_PATTERNS = ("GENERAL_REQUIREMENTS.md", "GENERAL_REQUIREMENTS", "baseline")
+
 FEATURE_DOC_EXCLUSIONS = {
     "INDEX.md",
     "FEATURE_REQUIREMENTS_MASTER.md",
@@ -55,6 +58,22 @@ def parse_master_gr_ids(text: str) -> set[str]:
     return set(re.findall(r"\|\s*FR-GR-\d+\s*\|\s*(GR-\d+)\s*\|", text))
 
 
+def validate_baseline_requirements_fr_gr_001(failures: list[str]) -> None:
+    """FR-GR-001: Keep an enforceable baseline requirements document in repository scope."""
+    if not GENERAL_REQ.exists():
+        fail(f"FR-GR-001: Missing baseline document {GENERAL_REQ.relative_to(ROOT)}", failures)
+        return
+    if not MASTER_REQ.exists():
+        return
+    master_text = MASTER_REQ.read_text(encoding="utf-8")
+    if not any(p in master_text for p in BASELINE_REF_PATTERNS):
+        fail(
+            f"FR-GR-001: FEATURE_REQUIREMENTS_MASTER.md must reference baseline "
+            f"({GENERAL_REQ.name}) as baseline reference",
+            failures,
+        )
+
+
 def validate_index(index_path: Path, failures: list[str]) -> None:
     if not index_path.exists():
         fail(f"Missing {index_path.relative_to(ROOT)}", failures)
@@ -87,26 +106,27 @@ def validate_index(index_path: Path, failures: list[str]) -> None:
                     )
 
 
-def validate_feature_docs(gr_ids: set[str], failures: list[str]) -> None:
+def validate_feature_baseline_alignment_fr_gr_002(gr_ids: set[str], failures: list[str]) -> None:
+    """FR-GR-002: Every feature requirement document must include mapped GR IDs and align to baseline."""
     feat_dir = ROOT / "requirements" / "feat"
     for doc in feat_dir.glob("*.md"):
         if doc.name in FEATURE_DOC_EXCLUSIONS:
             continue
         text = doc.read_text(encoding="utf-8")
         if "Source GR ID:" not in text:
-            fail(f"{doc.name} missing 'Source GR ID:'", failures)
+            fail(f"FR-GR-002: {doc.name} missing mapped GR ID ('Source GR ID:')", failures)
         if "## Feature Requirement" not in text:
-            fail(f"{doc.name} missing '## Feature Requirement' section", failures)
+            fail(f"FR-GR-002: {doc.name} missing '## Feature Requirement' section", failures)
         if "## Acceptance Criteria" not in text:
-            fail(f"{doc.name} missing '## Acceptance Criteria' section", failures)
+            fail(f"FR-GR-002: {doc.name} missing '## Acceptance Criteria' section", failures)
 
         match = re.search(r"Source GR ID:\s*(GR-\d+)", text)
         if not match:
-            fail(f"{doc.name} has invalid/missing GR reference format", failures)
+            fail(f"FR-GR-002: {doc.name} has invalid/missing GR reference format", failures)
             continue
         gr = match.group(1)
         if gr not in gr_ids:
-            fail(f"{doc.name} references unknown {gr}", failures)
+            fail(f"FR-GR-002: {doc.name} references {gr} which is not in baseline (conflict or unknown)", failures)
 
 
 def validate_changed_feature_docs(changed: list[str], failures: list[str]) -> None:
@@ -123,7 +143,7 @@ def validate_changed_feature_docs(changed: list[str], failures: list[str]) -> No
         text = doc.read_text(encoding="utf-8")
         for required in ("Source GR ID:", "## Feature Requirement", "## Acceptance Criteria"):
             if required not in text:
-                fail(f"Changed feature doc {doc.name} missing '{required}'", failures)
+                fail(f"FR-GR-002: Changed feature doc {doc.name} missing '{required}'", failures)
 
 
 def validate_runtime_change_requires_feature_doc(changed: list[str], failures: list[str]) -> None:
@@ -165,6 +185,11 @@ def main() -> int:
 
     failures: list[str] = []
 
+    validate_baseline_requirements_fr_gr_001(failures)
+    if failures:
+        print("\nRequirement validation failed.")
+        return 1
+
     for required in (GENERAL_REQ, MASTER_REQ, INDEX_REQ):
         if not required.exists():
             fail(f"Missing required file: {required.relative_to(ROOT)}", failures)
@@ -185,7 +210,7 @@ def main() -> int:
         fail(f"FEATURE_REQUIREMENTS_MASTER.md has unknown GR rows: {', '.join(extra_master)}", failures)
 
     validate_index(INDEX_REQ, failures)
-    validate_feature_docs(gr_ids, failures)
+    validate_feature_baseline_alignment_fr_gr_002(gr_ids, failures)
 
     changed = git_changed_files(args.base_ref, args.head_ref)
     validate_changed_feature_docs(changed, failures)

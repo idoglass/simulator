@@ -14,7 +14,7 @@ The order is updated for the current stack and constraints:
 
 | Order | Milestone | Feature File | Depends On | Why now | Status |
 | --- | --- | --- | --- | --- | --- |
-| 1 | MVP Core | [robust-generic-stateless-simulator.md](./robust-generic-stateless-simulator.md) | None | Establishes the core product boundary. | Planned |
+| 1 | MVP Core | [robust-generic-stateless-simulator.md](./robust-generic-stateless-simulator.md) | None | Establishes the core product boundary. | Done |
 | 2 | MVP Core | [mvc-architecture-framework-compliance.md](./mvc-architecture-framework-compliance.md) | 1 | Locks framework and layering constraints before feature growth. | Planned |
 | 3 | MVP Core | [shared-simulation-engine-gui-tui.md](./shared-simulation-engine-gui-tui.md) | 1,2 | Prevents duplicated logic between GUI/TUI. | Planned |
 | 4 | MVP Core | [stateless-application-execution-boundary.md](./stateless-application-execution-boundary.md) | 1,3 | Enforces no hidden mutable run state. | Planned |

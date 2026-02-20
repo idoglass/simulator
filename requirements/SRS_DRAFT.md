@@ -1,10 +1,10 @@
-# Software Requirements Specification (SRS) - Draft v0.3
+# Software Requirements Specification (SRS) - Draft v0.3.1
 
 ## Document Metadata
 
 - Product: Simulator
 - Document: `requirements/SRS_DRAFT.md`
-- Version: 0.3
+- Version: 0.3.1
 - Status: Draft
 - Date: 2026-02-20
 
@@ -197,6 +197,8 @@ The simulator SHALL provide:
 | SRS-FR-017 | The system SHALL allow a task to be configured as periodic and continuously executed. | When periodic mode is enabled, the task executes repeatedly at configured interval until turned off or run context ends. | GR-020, GR-023 |
 | SRS-FR-018 | The system SHALL execute enabled periodic tasks in parallel with other task/sequence execution. | Periodic task execution continues while foreground sequence steps run; foreground flow is not blocked by scheduler loop. | GR-020, GR-023, GR-026 |
 | SRS-FR-019 | The system SHALL expose runtime on/off controls for periodic task execution. | User can switch periodic task ON/OFF from UI; state change takes effect without app restart. | GR-025, GR-026 |
+| SRS-FR-020 | The application SHALL enforce a stateless execution boundary between independent runs. | Starting a new run does not reuse mutable in-memory execution state from previous runs. | GR-007, GR-021 |
+| SRS-FR-021 | The specification SHALL maintain end-to-end requirement traceability. | Each SRS functional requirement maps to GR ID(s) and at least one validation scenario. | GR-010, GR-024 |
 
 ## 5. Sequence Execution Semantics
 
@@ -323,6 +325,19 @@ The simulator SHALL provide:
 | SRS-NFR-004 | Testability | Unit tests for major components and simple e2e for critical flows. | GR-039 |
 | SRS-NFR-005 | CI quality gates | Lint and tests required in CI quality pipeline. | GR-040 |
 | SRS-NFR-006 | Concurrency behavior | Periodic scheduler must not block primary sequence execution path. | GR-020, GR-039 |
+| SRS-NFR-007 | Minimum capacity baseline | On baseline test hardware, support at least 25 simulated apps, 200 sequences/app (stored), 1000 steps/sequence, and 16 active periodic tasks. | GR-008, GR-020 |
+| SRS-NFR-008 | Throughput/latency baseline | On baseline test hardware, sustain 50 msg/s aggregate with payloads up to 4096 bytes and p95 internal step dispatch latency <= 200 ms (excluding network RTT). | GR-008, GR-020, GR-039 |
+
+### 12.1 Baseline Compatibility and Performance Environment
+
+| Dimension | Baseline |
+| --- | --- |
+| CPU | 4 vCPU |
+| Memory | 8 GB RAM |
+| Disk | SSD-backed workspace |
+| Python | 3.11 |
+| Linux target | Ubuntu 22.04+ x86_64 |
+| Windows target | Windows 11 x86_64 |
 
 ## 13. Validation and Test Scenarios (High Level)
 
@@ -342,8 +357,31 @@ The simulator SHALL provide:
 | SRS-TEST-012 | Run with unknown task reference. | Run is blocked with `SRS-E-TASK-001`. |
 | SRS-TEST-013 | Trigger receive timeout on a step. | Step fails with `SRS-E-TRN-003` and policy-applied run status. |
 | SRS-TEST-014 | Fail count assertion (`assertion_count` mismatch). | Verification fails with `SRS-E-VER-002`. |
+| SRS-TEST-015 | Execute run A, then run B with different data. | Run B starts with clean execution state (no mutable leakage from run A). |
+| SRS-TEST-016 | Validate requirement traceability table integrity. | Every SRS-FR maps to GR IDs and at least one SRS-TEST entry. |
+| SRS-TEST-017 | Capacity baseline scenario on reference environment. | System meets SRS-NFR-007 limits without functional regression. |
+| SRS-TEST-018 | Throughput baseline scenario on reference environment. | System meets SRS-NFR-008 throughput/latency target. |
 
-## 14. Traceability Map to General Requirements
+### 13.1 Functional Requirement to Test Mapping
+
+| Functional Requirement IDs | Test IDs |
+| --- | --- |
+| SRS-FR-001..SRS-FR-003 | SRS-TEST-001 |
+| SRS-FR-004..SRS-FR-005 | SRS-TEST-002 |
+| SRS-FR-006..SRS-FR-008 | SRS-TEST-002, SRS-TEST-003, SRS-TEST-014 |
+| SRS-FR-009 | SRS-TEST-001 |
+| SRS-FR-010 | SRS-TEST-001, SRS-TEST-006 |
+| SRS-FR-011..SRS-FR-012 | SRS-TEST-004, SRS-TEST-012 |
+| SRS-FR-013 | SRS-TEST-005 |
+| SRS-FR-014..SRS-FR-015 | SRS-TEST-002, SRS-TEST-008 |
+| SRS-FR-016 | SRS-TEST-006, SRS-TEST-007 |
+| SRS-FR-017..SRS-FR-019 | SRS-TEST-008, SRS-TEST-009, SRS-TEST-010, SRS-TEST-011 |
+| SRS-FR-020 | SRS-TEST-015 |
+| SRS-FR-021 | SRS-TEST-016 |
+
+## 14. Traceability and Coverage
+
+### 14.1 Traceability Map to General Requirements
 
 | SRS Requirement IDs | GR IDs |
 | --- | --- |
@@ -351,11 +389,37 @@ The simulator SHALL provide:
 | SRS-FR-005..SRS-FR-009 | GR-008, GR-019, GR-020, GR-030 |
 | SRS-FR-010..SRS-FR-012 | GR-009, GR-022, GR-023, GR-028 |
 | SRS-FR-013..SRS-FR-019 | GR-012, GR-020, GR-023, GR-025, GR-026, GR-031, GR-059 |
+| SRS-FR-020..SRS-FR-021 | GR-007, GR-010, GR-021, GR-024 |
 | SRS-UI-001..SRS-UI-008 | GR-012, GR-025, GR-026, GR-057 |
-| SRS-NFR-001..SRS-NFR-006 | GR-011, GR-020, GR-039, GR-040, GR-058, GR-059 |
+| SRS-NFR-001..SRS-NFR-008 | GR-008, GR-011, GR-020, GR-039, GR-040, GR-058, GR-059 |
+
+### 14.2 Prior Requirement Coverage (Conversation-Derived)
+
+| Prior Requirement | Coverage in SRS |
+| --- | --- |
+| Define target, message, expected response | Sections 3.3, 3.7, 3.8; SRS-FR-002 |
+| Send message to target and verify response | SRS-FR-006, SRS-FR-007, Section 6 |
+| Define sequence and run it | SRS-FR-004, SRS-FR-005, Section 5 |
+| Multiple simulated apps with own name/contracts/tasks/transports | SRS-FR-001, SRS-FR-003, SRS-FR-009; Sections 3.2, 3.4, 3.5, 3.6 |
+| GUI shows every action as it happens | SRS-FR-014, SRS-UI-002 |
+| GUI CRUD for every program element | SRS-UI-001 and Section 3 entity set |
+| Specific tasks run periodically and continuously | SRS-FR-017, Section 3.5.1, Section 5 |
+| Periodic tasks run in parallel with other tasks | SRS-FR-018, SRS-NFR-006 |
+| UI switch ON/OFF for periodic tasks | SRS-FR-019, SRS-UI-006, SRS-UI-007 |
+
+### 14.3 App Goals Coverage (Core GR Goals)
+
+| App Goal | Coverage in SRS |
+| --- | --- |
+| GR-007 robust generic stateless app | SRS-FR-020, Section 10 |
+| GR-008 multi-application simulation | SRS-FR-009, SRS-NFR-007, SRS-NFR-008 |
+| GR-009 `.h`/`ctypes` + task-driven behavior | SRS-FR-010, Section 8 |
+| GR-010 end-to-end traceability | SRS-FR-021, Section 14 |
+| GR-011 Windows/Linux portability | SRS-NFR-001, Section 12.1 |
+| GR-012 GUI + TUI parity | SRS-FR-013, SRS-UI-003, SRS-UI-004 |
 
 ## 15. Open Items for Next Revision (v0.4)
 
-1. Add measurable capacity/performance targets.
-2. Add full test matrix and pass thresholds.
-3. Add security-focused negative test scenarios (malformed payloads, oversized packets, invalid contract inputs).
+1. Add full test matrix and pass thresholds by test tier (unit/integration/e2e/portability).
+2. Add security-focused negative test scenarios (malformed payloads, oversized packets, invalid contract inputs).
+3. Define optional advanced verification operators beyond MVP (`regex`, numeric ranges, custom comparator plugins).

@@ -13,19 +13,23 @@ This project uses a gated feature-delivery pipeline so each implementation satis
    - Implement with shared engine parity across GUI (`py-gui`/`tk-mvc`) and TUI (Textual).
    - Respect MVC boundaries and stateless execution rules.
 
-3. **Quality Gate**
+3. **Architecture Boundary Gate**
+   - Enforce import/layering boundaries and UI-thread safety checks.
+   - CI job: `architecture-boundary-guard`.
+
+4. **Quality Gate**
    - Run unit tests for major components + simple e2e.
    - CI jobs:
      - `lint-test-linux`
      - `lint-test-windows`
      - `gui-tui-smoke`
 
-4. **Submodule Policy Gate**
+5. **Submodule Policy Gate**
    - If `py-gui` pointer changes, include Old SHA / New SHA / Reason in PR.
    - Follow `skills/SUBMODULE_WORKFLOW.md`.
    - CI job: `submodule-policy-check`.
 
-5. **Documentation & Traceability Gate**
+6. **Documentation & Traceability Gate**
    - Update docs/help as needed.
    - Keep `requirements/feat/INDEX.md` status aligned (`Planned`, `In Progress`, `Done`).
 
@@ -37,6 +41,7 @@ This project uses a gated feature-delivery pipeline so each implementation satis
   - `.github/pull_request_template.md`
 - Validation scripts:
   - `scripts/validate_requirements.py`
+  - `scripts/architecture_boundary_check.py`
   - `scripts/ci_test_runner.py`
   - `scripts/gui_tui_smoke_check.py`
   - `scripts/submodule_policy_check.py`
@@ -45,6 +50,7 @@ This project uses a gated feature-delivery pipeline so each implementation satis
 
 ```bash
 python scripts/validate_requirements.py
+python scripts/architecture_boundary_check.py
 python scripts/ci_test_runner.py
 python scripts/gui_tui_smoke_check.py
 ```

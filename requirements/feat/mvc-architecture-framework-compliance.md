@@ -2,7 +2,7 @@
 
 - Source GR ID: GR-058
 - Priority: P0
-- Status: Draft
+- Status: Implemented
 
 ## Feature Requirement
 Implement features under MVC architecture using designated frameworks (`py-gui`/`tk-mvc` for GUI and Textual for TUI) and controlled submodule workflow.
@@ -20,3 +20,6 @@ Implement features under MVC architecture using designated frameworks (`py-gui`/
 4. Add review gate: reject cross-layer imports that violate MVC boundaries.
 5. Follow documented submodule workflow when updating `py-gui` pointers.
 6. Keep and document `adapters/ui` and `adapters/transport` as intentional boundary groupings.
+
+## Implementation
+- **architecture/MVC_BOUNDARIES.md** documents layer ownership and adapter grouping; CI `scripts/architecture_boundary_check.py` enforces cross-layer import rules (no domain/workflow → adapters/UI/transport, no UI → transport).

@@ -2,7 +2,7 @@
 
 - Source GR ID: GR-012
 - Priority: P0
-- Status: Draft
+- Status: Implemented
 
 ## Feature Requirement
 Provide both GUI and TUI interfaces for simulator usage using designated frameworks.
@@ -10,9 +10,5 @@ Provide both GUI and TUI interfaces for simulator usage using designated framewo
 ## Acceptance Criteria
 - Feature behavior is available through GUI (`py-gui`/`tk-mvc`) and TUI (Textual) entry points.
 
-## Implementation Plan (MVP)
-
-1. Implement minimum run/list/load task workflows in GUI and TUI.
-2. Ensure both interfaces expose consistent commands/actions and result semantics.
-3. Wire both interfaces to shared engine services only (no duplicated core logic).
-4. Add interface smoke tests for both paths.
+## Implementation
+- **Entry points:** `python -m simulator --gui` and `python -m simulator --tui`. GUI uses `adapters/ui/gui/main` (run via shared service); TUI uses `adapters/ui/tui/main` (Textual app with Run/List tasks, optional dep `textual`). Both call **SimulationService** only; no duplicated core logic. Fallback: if Textual not installed, --tui runs one CLI flow.

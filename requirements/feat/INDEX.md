@@ -15,29 +15,30 @@ The order is updated for the current stack and constraints:
 | Order | Milestone | Feature File | Depends On | Why now | Status |
 | --- | --- | --- | --- | --- | --- |
 | 1 | MVP Core | [robust-generic-stateless-simulator.md](./robust-generic-stateless-simulator.md) | None | Establishes the core product boundary. | Done |
-| 2 | MVP Core | [mvc-architecture-framework-compliance.md](./mvc-architecture-framework-compliance.md) | 1 | Locks framework and layering constraints before feature growth. | Planned |
-| 3 | MVP Core | [shared-simulation-engine-gui-tui.md](./shared-simulation-engine-gui-tui.md) | 1,2 | Prevents duplicated logic between GUI/TUI. | Planned |
-| 4 | MVP Core | [stateless-application-execution-boundary.md](./stateless-application-execution-boundary.md) | 1,3 | Enforces no hidden mutable run state. | Planned |
-| 5 | MVP Core | [target-based-simulation-execution.md](./target-based-simulation-execution.md) | 1,3,4 | Enables real target-driven runs. | Planned |
-| 6 | MVP Core | [udp-tcp-protocol-support.md](./udp-tcp-protocol-support.md) | 5 | Delivers required transport scope in MVP. | Planned |
-| 7 | MVP Core | [h-ctypes-message-structure-validation.md](./h-ctypes-message-structure-validation.md) | 5 | Locks message contract source-of-truth. | Planned |
-| 8 | MVP Core | [ctypes-and-registered-tasks-driven-simulation.md](./ctypes-and-registered-tasks-driven-simulation.md) | 5,7 | Restricts runtime behavior to approved inputs. | Planned |
-| 9 | MVP Core | [registered-task-only-execution.md](./registered-task-only-execution.md) | 8 | Prevents uncontrolled execution paths. | Planned |
-| 10 | MVP Core | [runtime-task-loading-registration.md](./runtime-task-loading-registration.md) | 8,9 | Adds extensibility without restart. | Planned |
-| 11 | MVP Core | [send-receive-message-simulation-scaling.md](./send-receive-message-simulation-scaling.md) | 6,8,10 | Provides core transport-flow behavior. | Planned |
-| 12 | MVP Core | [request-matching-and-verification.md](./request-matching-and-verification.md) | 11 | Adds measurable run correctness checks. | Planned |
-| 13 | MVP Core | [gui-and-tui-interfaces.md](./gui-and-tui-interfaces.md) | 3,11 | Exposes engine through both product interfaces. | Planned |
-| 14 | MVP Core | [core-simulation-capabilities-gui-tui.md](./core-simulation-capabilities-gui-tui.md) | 13 | Ensures minimum functional parity. | Planned |
-| 15 | MVP Core | [verbose-lifecycle-logging-redaction.md](./verbose-lifecycle-logging-redaction.md) | 11,12 | Enables diagnosability from first release. | Planned |
-| 16 | MVP Core | [critical-path-test-coverage.md](./critical-path-test-coverage.md) | 6-15 | Locks MVP quality and regression protection. | Planned |
-| 17 | MVP Hardening | [ci-quality-gates-lint-test-security.md](./ci-quality-gates-lint-test-security.md) | 16 | Automates quality enforcement in CI. | Planned |
-| 18 | MVP Hardening | [modular-code-ownership-boundaries.md](./modular-code-ownership-boundaries.md) | 2,3 | Improves maintainability and team velocity. | Planned |
-| 19 | MVP Hardening | [portability-compatibility-matrix.md](./portability-compatibility-matrix.md) | 6,13,16 | Validates Windows/Linux desktop targets. | Planned |
-| 20 | MVP Hardening | [gui-tui-help-man-documentation.md](./gui-tui-help-man-documentation.md) | 13,14 | Makes features usable without tribal knowledge. | Planned |
-| 21 | MVP Hardening | [prefer-reliable-third-party-libraries.md](./prefer-reliable-third-party-libraries.md) | 1-20 | Reduces custom-code risk and effort. | Planned |
-| 22 | Post-MVP | [multi-application-target-simulation-capacity.md](./multi-application-target-simulation-capacity.md) | 11,16 | Expand throughput after stable MVP baseline. | Planned |
-| 23 | Post-MVP | [task-composition-from-registered-tasks.md](./task-composition-from-registered-tasks.md) | 10 | Adds power-user extensibility. | Planned |
-| 24 | Post-MVP | [proxy-traffic-recording-and-replay.md](./proxy-traffic-recording-and-replay.md) | 11,12,15 | Adds advanced workflow acceleration. | Planned |
+| 2 | MVP Core | [mvc-architecture-framework-compliance.md](./mvc-architecture-framework-compliance.md) | 1 | Locks framework and layering constraints before feature growth. | Done |
+| 3 | MVP Core | [shared-simulation-engine-gui-tui.md](./shared-simulation-engine-gui-tui.md) | 1,2 | Prevents duplicated logic between GUI/TUI. | Done |
+| 4 | MVP Core | [stateless-application-execution-boundary.md](./stateless-application-execution-boundary.md) | 1,3 | Enforces no hidden mutable run state. | Done |
+| 5 | MVP Core | [target-based-simulation-execution.md](./target-based-simulation-execution.md) | 1,3,4 | Enables real target-driven runs. | Done |
+| 6 | MVP Core | [udp-tcp-protocol-support.md](./udp-tcp-protocol-support.md) | 5 | Delivers required transport scope in MVP. | Done |
+| 7 | MVP Core | [h-ctypes-message-structure-validation.md](./h-ctypes-message-structure-validation.md) | 5 | Locks message contract source-of-truth. | Done |
+| 8 | MVP Core | [ctypes-and-registered-tasks-driven-simulation.md](./ctypes-and-registered-tasks-driven-simulation.md) | 5,7 | Restricts runtime behavior to approved inputs. | Done |
+| 9 | MVP Core | [registered-task-only-execution.md](./registered-task-only-execution.md) | 8 | Prevents uncontrolled execution paths. | Done |
+| 10 | MVP Core | [runtime-task-loading-registration.md](./runtime-task-loading-registration.md) | 8,9 | Adds extensibility without restart. | Done |
+| 11 | MVP Core | [send-receive-message-simulation-scaling.md](./send-receive-message-simulation-scaling.md) | 6,8,10 | Provides core transport-flow behavior. | Done |
+| 12 | MVP Core | [request-matching-and-verification.md](./request-matching-and-verification.md) | 11 | Adds measurable run correctness checks. | Done |
+| 13 | MVP Core | [gui-and-tui-interfaces.md](./gui-and-tui-interfaces.md) | 3,11 | Exposes engine through both product interfaces. | Done |
+| 14 | MVP Core | [core-simulation-capabilities-gui-tui.md](./core-simulation-capabilities-gui-tui.md) | 13 | Ensures minimum functional parity. | Done |
+| 15 | MVP Core | [verbose-lifecycle-logging-redaction.md](./verbose-lifecycle-logging-redaction.md) | 11,12 | Enables diagnosability from first release. | Done |
+| 16 | MVP Core | [critical-path-test-coverage.md](./critical-path-test-coverage.md) | 6-15 | Locks MVP quality and regression protection. | Done |
+| 17 | MVP Hardening | [ci-quality-gates-lint-test-security.md](./ci-quality-gates-lint-test-security.md) | 16 | Automates quality enforcement in CI. | Done |
+| 18 | MVP Hardening | [modular-code-ownership-boundaries.md](./modular-code-ownership-boundaries.md) | 2,3 | Improves maintainability and team velocity. | Done |
+| 19 | MVP Hardening | [portability-compatibility-matrix.md](./portability-compatibility-matrix.md) | 6,13,16 | Validates Windows/Linux desktop targets. | Done |
+| 20 | MVP Hardening | [gui-tui-help-man-documentation.md](./gui-tui-help-man-documentation.md) | 13,14 | Makes features usable without tribal knowledge. | Done |
+| 21 | MVP Hardening | [prefer-reliable-third-party-libraries.md](./prefer-reliable-third-party-libraries.md) | 1-20 | Reduces custom-code risk and effort. | Done |
+| 22 | Post-MVP | [multi-application-target-simulation-capacity.md](./multi-application-target-simulation-capacity.md) | 11,16 | Expand throughput after stable MVP baseline. | Done |
+| 23 | Post-MVP | [task-composition-from-registered-tasks.md](./task-composition-from-registered-tasks.md) | 10 | Adds power-user extensibility. | Done |
+| 24 | Post-MVP | [proxy-traffic-recording-and-replay.md](./proxy-traffic-recording-and-replay.md) | 11,12,15 | Adds advanced workflow acceleration. | Done |
+| 25 | Post-MVP | [gui-tui-create-tasks.md](./gui-tui-create-tasks.md) | 13,14,10,23 | Load, compose, create tasks in GUI and TUI. | Done |
 
 ## B) Governance and Process Plan (run in parallel, required gates)
 

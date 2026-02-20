@@ -1,10 +1,10 @@
-# Software Requirements Specification (SRS) - Draft v0.2.1
+# Software Requirements Specification (SRS) - Draft v0.3
 
 ## Document Metadata
 
 - Product: Simulator
 - Document: `requirements/SRS_DRAFT.md`
-- Version: 0.2.1
+- Version: 0.3
 - Status: Draft
 - Date: 2026-02-20
 
@@ -16,7 +16,7 @@ Define the software requirements for a simulator that:
 2. Verifies received responses against user-defined expectations.
 3. Supports multi-step execution flows and multiple simulated applications.
 
-This revision expands the initial draft with concrete functional boundaries, constraints, acceptance criteria, and traceability to baseline GR IDs.
+This revision expands the initial draft with concrete functional boundaries, field-level schemas, error codes, acceptance criteria, and traceability to baseline GR IDs.
 
 ## 2. Scope
 
@@ -32,20 +32,147 @@ The simulator SHALL provide:
 8. Optional periodic task execution that runs continuously in parallel with other tasks.
 9. UI controls to switch periodic tasks on and off at runtime.
 
-## 3. In-Scope Entities and Minimum Data Model
+## 3. Field-Level Schemas (Types, Defaults, Ranges)
 
-| Entity | Required Fields (minimum) | Notes |
-| --- | --- | --- |
-| SimulatedApplication | `app_id`, `app_name` | `app_name` must be unique in workspace. |
-| TargetDefinition | `target_id`, `target_name`, `application_ref`, `transport_ref` | A target belongs to one application context. |
-| ContractDefinition | `contract_id`, `application_ref`, `source_type`, `source_path`, `version` | `source_type` in `{repo_h, user_h}`. |
-| TaskDefinition | `task_id`, `application_ref`, `task_name`, `registration_type`, `task_ref`, `execution_mode`, `periodic_config` | `registration_type` in `{built_in, runtime_loaded}`; `execution_mode` in `{oneshot, periodic}`. |
-| TransportDefinition | `transport_id`, `application_ref`, `protocol`, `mode`, `local_endpoint`, `remote_endpoint` | `protocol` in `{tcp, udp}`; `mode` in `{client, server}`. |
-| MessageDefinition | `message_id`, `target_ref`, `contract_ref`, `message_type`, `payload_binding` | `payload_binding` must map to `.h`/`ctypes` model. |
-| ExpectedResponse | `expectation_id`, `message_ref`, `match_rule`, `assertion` | MVP assertion must include count-based support. |
-| SequenceDefinition | `sequence_id`, `application_ref`, `sequence_name`, `steps`, `failure_policy` | `steps` is ordered list of step references. |
-| SequenceStep | `step_id`, `sequence_ref`, `order_index`, `message_ref`, `expectation_ref` | `order_index` starts at 1 and must be unique per sequence. |
-| PeriodicTaskRuntime | `runtime_id`, `task_ref`, `enabled`, `interval_ms`, `last_run_at` | `interval_ms` must be positive when enabled. |
+### 3.1 Common Type Rules
+
+- **ID fields:** `string`, regex `^[A-Za-z0-9._-]{1,64}$`
+- **Name fields:** `string`, length `1..128`, trimmed, non-empty
+- **Timestamp fields:** UTC ISO-8601 string (example: `2026-02-20T15:04:05Z`)
+- **Endpoint format:** `host:port` where `port` is integer `1..65535`
+- **Boolean defaults:** explicit (`true`/`false`), never null
+
+### 3.2 SimulatedApplication
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| app_id | string | Yes | N/A | ID regex | Stable unique identifier. |
+| app_name | string | Yes | N/A | length 1..128 | Unique across workspace. |
+| description | string | No | `""` | length 0..512 | User-readable notes. |
+| enabled | boolean | No | `true` | `true`/`false` | Disabled apps cannot run sequences. |
+
+### 3.3 TargetDefinition
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| target_id | string | Yes | N/A | ID regex | Unique target identifier. |
+| target_name | string | Yes | N/A | length 1..128 | Display name. |
+| application_ref | string | Yes | N/A | ID regex | Must reference existing app. |
+| transport_ref | string | Yes | N/A | ID regex | Must reference existing transport. |
+| timeout_ms | integer | No | `5000` | `100..120000` | Per-target response timeout. |
+| retry_count | integer | No | `1` | `0..10` | Send/receive retry attempts. |
+
+### 3.4 ContractDefinition
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| contract_id | string | Yes | N/A | ID regex | Unique contract identifier. |
+| application_ref | string | Yes | N/A | ID regex | Owner app. |
+| source_type | enum | Yes | N/A | `repo_h`, `user_h` | `.h` source origin. |
+| source_path | string | Yes | N/A | length 1..512 | Path to `.h` source. |
+| version | string | No | `0.1.0` | semver-like `X.Y.Z` | Contract revision label. |
+| checksum_sha256 | string | No | `""` | 64 hex chars or empty | Optional integrity marker. |
+
+### 3.5 TaskDefinition
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| task_id | string | Yes | N/A | ID regex | Unique task identifier. |
+| application_ref | string | Yes | N/A | ID regex | Owner app. |
+| task_name | string | Yes | N/A | length 1..128 | Display name. |
+| registration_type | enum | Yes | N/A | `built_in`, `runtime_loaded` | Registration source. |
+| task_ref | string | Yes | N/A | length 1..256 | Registered task key/path. |
+| execution_mode | enum | No | `oneshot` | `oneshot`, `periodic` | Runtime execution style. |
+| periodic_config | object | Conditional | `{}` | see Section 3.5.1 | Required when `execution_mode=periodic`. |
+
+#### 3.5.1 periodic_config
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| enabled | boolean | No | `false` | `true`/`false` | UI can toggle at runtime. |
+| interval_ms | integer | Yes (periodic) | `1000` | `100..86400000` | Scheduler period (0.1s to 24h). |
+| jitter_pct | integer | No | `0` | `0..30` | Optional random spread to avoid thundering herd. |
+| overlap_policy | enum | No | `skip` | `skip`, `queue`, `parallel` | Behavior when next interval arrives while running. |
+| max_parallel_runs | integer | Conditional | `1` | `1..32` | Used only when `overlap_policy=parallel`. |
+| auto_start | boolean | No | `false` | `true`/`false` | Start automatically at run start. |
+
+### 3.6 TransportDefinition
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| transport_id | string | Yes | N/A | ID regex | Unique transport identifier. |
+| application_ref | string | Yes | N/A | ID regex | Owner app. |
+| protocol | enum | No | `tcp` | `tcp`, `udp` | Supported transport protocol. |
+| mode | enum | No | `client` | `client`, `server` | Runtime mode. |
+| local_endpoint | string | Conditional | `""` | endpoint format or empty | Required for server mode. |
+| remote_endpoint | string | Conditional | `""` | endpoint format or empty | Required for client mode. |
+| connect_timeout_ms | integer | No | `3000` | `100..60000` | Connection setup timeout. |
+| read_timeout_ms | integer | No | `5000` | `100..120000` | Read timeout. |
+| write_timeout_ms | integer | No | `5000` | `100..120000` | Write timeout. |
+| max_packet_bytes | integer | No | `65535` | `1..1048576` | Transport packet safety limit. |
+
+### 3.7 MessageDefinition
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| message_id | string | Yes | N/A | ID regex | Unique message identifier. |
+| target_ref | string | Yes | N/A | ID regex | Must reference existing target. |
+| contract_ref | string | Yes | N/A | ID regex | Must reference existing contract. |
+| message_type | string | Yes | N/A | length 1..128 | Contract-defined message type. |
+| payload_binding | string | Yes | N/A | length 1..256 | `.h`/`ctypes` structure binding key. |
+| payload_values | object | No | `{}` | JSON object | Runtime payload values. |
+| send_timeout_ms | integer | No | `5000` | `100..120000` | Send timeout. |
+| expect_response | boolean | No | `true` | `true`/`false` | Whether verification is expected. |
+
+### 3.8 ExpectedResponse
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| expectation_id | string | Yes | N/A | ID regex | Unique expectation identifier. |
+| message_ref | string | Yes | N/A | ID regex | Must reference message. |
+| match_rule | enum | No | `exact` | `exact`, `subset`, `absent` | Payload match behavior. |
+| assertion_count | integer | No | `1` | `0..100000` | Required count assertion (MVP). |
+| assertion_window_ms | integer | No | `5000` | `100..300000` | Verification collection window. |
+| required_fields | array[string] | No | `[]` | max 256 entries | Required when `match_rule=subset`. |
+| allow_extra_fields | boolean | No | `true` | `true`/`false` | Extra fields allowed in observed response. |
+
+### 3.9 SequenceDefinition
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| sequence_id | string | Yes | N/A | ID regex | Unique sequence identifier. |
+| application_ref | string | Yes | N/A | ID regex | Owner app. |
+| sequence_name | string | Yes | N/A | length 1..128 | Display name. |
+| failure_policy | enum | No | `stop_on_fail` | `stop_on_fail`, `continue_on_fail` | Failure handling mode. |
+| step_timeout_ms | integer | No | `5000` | `100..120000` | Default timeout for step execution. |
+| max_duration_ms | integer | No | `300000` | `1000..3600000` | Hard run duration ceiling. |
+| enabled | boolean | No | `true` | `true`/`false` | Disabled sequences cannot run. |
+
+### 3.10 SequenceStep
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| step_id | string | Yes | N/A | ID regex | Unique step identifier. |
+| sequence_ref | string | Yes | N/A | ID regex | Must reference sequence. |
+| order_index | integer | Yes | N/A | `1..10000` | Unique within sequence. |
+| message_ref | string | Yes | N/A | ID regex | Must reference message. |
+| expectation_ref | string | Yes | N/A | ID regex | Must reference expectation. |
+| enabled | boolean | No | `true` | `true`/`false` | Disabled steps are skipped. |
+| delay_before_ms | integer | No | `0` | `0..600000` | Delay before send. |
+| retry_count | integer | No | `0` | `0..10` | Step-level retries. |
+
+### 3.11 PeriodicTaskRuntime
+
+| Field | Type | Required | Default | Allowed / Range | Notes |
+| --- | --- | --- | --- | --- | --- |
+| runtime_id | string | Yes | N/A | ID regex | Runtime scheduler instance ID. |
+| task_ref | string | Yes | N/A | ID regex | Must reference periodic task. |
+| enabled | boolean | No | `false` | `true`/`false` | Current runtime enabled state. |
+| interval_ms | integer | No | `1000` | `100..86400000` | Active interval in milliseconds. |
+| last_run_at | string/null | No | `null` | ISO-8601 UTC or null | Last completed execution timestamp. |
+| next_run_at | string/null | No | `null` | ISO-8601 UTC or null | Scheduled next runtime. |
+| run_count | integer | No | `0` | `0..2147483647` | Successful + failed iterations count. |
+| consecutive_failures | integer | No | `0` | `0..100000` | Last uninterrupted failure streak. |
 
 ## 4. Functional Requirements
 
@@ -81,10 +208,17 @@ The simulator SHALL provide:
    - `FAIL` when any step fails and failure policy is `stop_on_fail`.
    - `COMPLETE_WITH_FAILURES` when failure policy is `continue_on_fail` and at least one step fails.
 5. Default `failure_policy` is `stop_on_fail`.
-6. Retry and timeout policy is in scope but exact numeric defaults are TBD in v0.3.
+6. Default sequence timeout and retry policy:
+   - `step_timeout_ms` default is `5000`.
+   - `retry_count` default is `0` at step level and `1` at target level.
+   - Transport connect/read/write defaults are in Section 3.6.
 7. Enabled periodic tasks may run before, during, and after sequence execution within the same run context.
 8. Periodic execution is independent of sequence step ordering and runs on scheduler interval.
 9. Switching a periodic task OFF stops future iterations; an in-flight iteration is allowed to finish gracefully.
+10. Overlap policy behavior for periodic tasks:
+    - `skip`: skip triggering a new run if prior run is still in-flight.
+    - `queue`: allow one pending trigger; additional triggers are dropped.
+    - `parallel`: permit concurrent runs up to `max_parallel_runs`.
 
 ## 6. Response Verification Rules (MVP)
 
@@ -144,13 +278,40 @@ The simulator SHALL provide:
 
 1. Validation errors SHALL be reported before run start when possible.
 2. Runtime errors SHALL include actionable reason and affected entity/step.
-3. Minimum error categories:
-   - `VALIDATION_ERROR`
-   - `TRANSPORT_ERROR`
-   - `VERIFICATION_ERROR`
-   - `TASK_REGISTRATION_ERROR`
-   - `INTERNAL_ERROR`
-4. Detailed error code catalog is TBD for v0.3.
+3. Every emitted error SHALL include:
+   - `error_code`
+   - `category`
+   - `message`
+   - `entity_type`
+   - `entity_id`
+   - `run_id`
+   - `step_id` (if applicable)
+   - `timestamp_utc`
+   - `recoverable` (`true`/`false`)
+
+### 11.1 Error Code Table (Concrete)
+
+| Error Code | Category | Trigger Condition | System Behavior | Recoverable |
+| --- | --- | --- | --- | --- |
+| SRS-E-VAL-001 | VALIDATION_ERROR | Required field missing | Reject create/update/run request | Yes |
+| SRS-E-VAL-002 | VALIDATION_ERROR | Field out of allowed range/type | Reject request; include field path | Yes |
+| SRS-E-VAL-003 | VALIDATION_ERROR | Invalid entity reference (missing `*_ref`) | Reject request; include missing reference | Yes |
+| SRS-E-VAL-004 | VALIDATION_ERROR | Duplicate `app_name` in workspace | Reject app create/update | Yes |
+| SRS-E-VAL-005 | VALIDATION_ERROR | Invalid endpoint format (`host:port`) | Reject transport save/run | Yes |
+| SRS-E-VAL-006 | VALIDATION_ERROR | Invalid periodic config (`interval_ms <= 0`, bad overlap config) | Reject periodic enable/start | Yes |
+| SRS-E-TASK-001 | TASK_REGISTRATION_ERROR | Task reference not registered | Block run start | Yes |
+| SRS-E-TASK-002 | TASK_REGISTRATION_ERROR | Runtime task load/registration failed | Block dependent run paths | Yes |
+| SRS-E-TRN-001 | TRANSPORT_ERROR | Connection open failed | Mark step failed; apply retry policy | Yes |
+| SRS-E-TRN-002 | TRANSPORT_ERROR | Send timeout reached | Mark step failed; apply retry policy | Yes |
+| SRS-E-TRN-003 | TRANSPORT_ERROR | Receive timeout reached | Mark step failed; continue or abort per policy | Yes |
+| SRS-E-TRN-004 | TRANSPORT_ERROR | Connection closed/reset by peer during run | Mark step failed; log peer reset details | Yes |
+| SRS-E-VER-001 | VERIFICATION_ERROR | Expected response not observed within window | Step verification failed | Yes |
+| SRS-E-VER-002 | VERIFICATION_ERROR | Count assertion mismatch | Step verification failed with expected vs observed counts | Yes |
+| SRS-E-VER-003 | VERIFICATION_ERROR | Payload mismatch for `exact`/`subset` rule | Step verification failed with mismatch summary | Yes |
+| SRS-E-RUN-001 | RUN_POLICY_ERROR | Sequence aborted by `stop_on_fail` policy | Set run status to `FAIL` and stop next steps | No |
+| SRS-E-RUN-002 | RUN_POLICY_ERROR | Periodic trigger skipped due to `overlap_policy=skip` | Emit warning event and continue scheduler | Yes |
+| SRS-E-RUN-003 | RUN_POLICY_ERROR | Periodic queue overflow under `overlap_policy=queue` | Drop extra trigger and emit warning | Yes |
+| SRS-E-INT-001 | INTERNAL_ERROR | Unexpected unhandled exception | Mark run failed and preserve diagnostic context | No |
 
 ## 12. Non-Functional Requirements
 
@@ -177,6 +338,10 @@ The simulator SHALL provide:
 | SRS-TEST-008 | Enable one periodic task and run a sequence in parallel. | Periodic task continues to execute while sequence completes. |
 | SRS-TEST-009 | Switch periodic task OFF during execution. | No new periodic iterations start after OFF is applied. |
 | SRS-TEST-010 | Enable two periodic tasks with different intervals. | Both execute in parallel without blocking foreground sequence flow. |
+| SRS-TEST-011 | Save invalid periodic interval (`interval_ms=0`). | Validation fails with `SRS-E-VAL-006`. |
+| SRS-TEST-012 | Run with unknown task reference. | Run is blocked with `SRS-E-TASK-001`. |
+| SRS-TEST-013 | Trigger receive timeout on a step. | Step fails with `SRS-E-TRN-003` and policy-applied run status. |
+| SRS-TEST-014 | Fail count assertion (`assertion_count` mismatch). | Verification fails with `SRS-E-VER-002`. |
 
 ## 14. Traceability Map to General Requirements
 
@@ -189,11 +354,8 @@ The simulator SHALL provide:
 | SRS-UI-001..SRS-UI-008 | GR-012, GR-025, GR-026, GR-057 |
 | SRS-NFR-001..SRS-NFR-006 | GR-011, GR-020, GR-039, GR-040, GR-058, GR-059 |
 
-## 15. Open Items for Next Revision (v0.3)
+## 15. Open Items for Next Revision (v0.4)
 
-1. Finalize numeric timeout/retry defaults.
-2. Define complete error code catalog and remediation guidance.
-3. Define full field-level schema (types, ranges, defaults) for all entities.
-4. Add measurable capacity/performance targets.
-5. Add full test matrix and pass thresholds.
-6. Define overlap policy for periodic tasks when an interval fires during in-flight execution.
+1. Add measurable capacity/performance targets.
+2. Add full test matrix and pass thresholds.
+3. Add security-focused negative test scenarios (malformed payloads, oversized packets, invalid contract inputs).

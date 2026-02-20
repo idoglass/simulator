@@ -171,3 +171,7 @@ Minimum tests for verification behavior:
 ## 10) Requirement Mapping
 
 - GR-030, GR-026, GR-039, GR-059
+
+## Related Artifact
+
+- `architecture/verification-roadmap.md`

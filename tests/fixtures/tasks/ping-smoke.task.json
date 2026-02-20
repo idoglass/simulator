@@ -1,0 +1,45 @@
+{
+  "task_schema_version": "1.0.0",
+  "task_id": "ping-smoke",
+  "name": "Ping Smoke Task",
+  "description": "Canonical smoke task for request/response transport verification.",
+  "base_task_ids": [],
+  "metadata": {
+    "author": "fixture-pack",
+    "tags": [
+      "smoke",
+      "tcp",
+      "udp"
+    ],
+    "created_at": "2026-02-19T00:00:00Z"
+  },
+  "preconditions": [],
+  "steps": [
+    {
+      "step_id": "s1",
+      "action": "send",
+      "message_type": "PingRequest",
+      "payload_ref": "req1",
+      "expect": {
+        "matcher": {
+          "direction": "receive",
+          "message_type": "PingResponse"
+        },
+        "expected_count": 1,
+        "comparison": "eq"
+      },
+      "timeout_ms": 1000
+    }
+  ],
+  "payloads": {
+    "req1": {
+      "id": 1,
+      "body": "hello"
+    }
+  },
+  "defaults": {
+    "protocol": "tcp",
+    "mode": "client",
+    "capture_enabled": false
+  }
+}

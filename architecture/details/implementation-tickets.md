@@ -43,6 +43,8 @@ Mandatory done checks for every ticket:
 - Done when:
   - Services are composed through one container entrypoint.
   - GUI and TUI can resolve the same shared service graph.
+- **Status:** Complete
+- **Completed:** `container.py`, `execution_orchestrator.py`, `tests/unit/app/test_container.py` added; GUI/TUI use same graph via `Container`.
 
 ### TKT-C01-02 - Implement run event bus contract
 - Primary SRS: `SRS-FR-014`, `SRS-FR-015`, `SRS-UI-002`
@@ -56,6 +58,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/domain/test_run_event_bus.py` (new)
 - Done when:
   - Run/step/scheduler events are publishable and observable by UI + logging adapters.
+- **Status:** Complete
+- **Completed:** `run_events.py`, `run_event_bus.py`, `tests/unit/domain/test_run_event_bus.py`; EventBusPort exists.
 
 ---
 
@@ -73,6 +77,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/domain/test_entity_validation.py` (new)
 - Done when:
   - All SRS schema constraints are validated with unit tests.
+- **Status:** Complete
+- **Completed:** `simulation_entities.py`, `model_validation.py`, `tests/unit/domain/test_entity_validation.py`.
 
 ### TKT-C02-02 - Implement repository ports and JSON workspace storage adapter
 - Primary SRS: `SRS-FR-001..SRS-FR-004`, `SRS-FR-009`, `SRS-FR-021`
@@ -87,6 +93,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/config/test_reference_integrity.py` (new)
 - Done when:
   - CRUD works for all persisted entities with referential integrity enforcement.
+- **Status:** Complete
+- **Completed:** `repository_ports.py`, `workspace_store.py`, `repository_impl.py`, unit tests for workspace and reference integrity.
 
 ---
 
@@ -104,6 +112,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/workflows/test_sequence_runner_order.py` (new)
 - Done when:
   - Steps execute strictly by `order_index` with lifecycle state output per step.
+- **Status:** Complete
+- **Completed:** `sequence_runner.py`, `step_executor.py`, `step_result.py`, `tests/unit/workflows/test_sequence_runner_order.py`.
 
 ### TKT-C03-02 - Implement retry and failure policy handling
 - Primary SRS: `SRS-FR-005`, `SRS-FR-008`, `SRS-E-RUN-001`
@@ -117,6 +127,8 @@ Mandatory done checks for every ticket:
   - `tests/integration/test_failure_policy_continue_on_fail.py` (new)
 - Done when:
   - `PASS` / `FAIL` / `COMPLETE_WITH_FAILURES` statuses match policy and tests.
+- **Status:** Complete
+- **Completed:** `run_summary_builder.py`, integration tests for stop/continue failure policy.
 
 ---
 
@@ -134,6 +146,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/domain/test_periodic_scheduler_loop.py` (new)
 - Done when:
   - Enabled periodic tasks run continuously during active run context.
+- **Status:** Complete
+- **Completed:** `periodic_scheduler.py`, `periodic_runtime.py`, `periodic_runtime_controller.py`, unit test.
 
 ### TKT-C04-02 - Implement overlap policies and runtime ON/OFF API
 - Primary SRS: `SRS-FR-018`, `SRS-FR-019`, `SRS-E-RUN-002`, `SRS-E-RUN-003`
@@ -147,6 +161,8 @@ Mandatory done checks for every ticket:
   - `tests/integration/test_periodic_toggle_runtime.py` (new)
 - Done when:
   - Toggle state applies immediately and overlap behavior matches policy definitions.
+- **Status:** Complete
+- **Completed:** `periodic_toggle_service.py`, integration tests for overlap and toggle.
 
 ---
 
@@ -164,6 +180,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/adapters/transport/test_endpoint_parser.py` (new)
 - Done when:
   - Invalid transport configs fail with deterministic error codes.
+- **Status:** Complete
+- **Completed:** `endpoint_parser.py`, `transport_validation.py`, `tests/unit/adapters/transport/test_endpoint_parser.py`; TransportPort exists.
 
 ### TKT-C05-02 - Implement TCP/UDP adapters for client/server flows
 - Primary SRS: `SRS-FR-006`, `SRS-FR-016`, `SRS-E-TRN-002..004`
@@ -177,6 +195,8 @@ Mandatory done checks for every ticket:
   - `tests/integration/test_transport_tcp_udp_modes.py` (new)
 - Done when:
   - Sequence runner can send/receive through both protocols with mapped errors.
+- **Status:** Complete
+- **Completed:** `transport_gateway.py`; TCP/UDP via existing `tcp/adapter.py`, `udp/adapter.py`, `composite_transport.py`; integration test added.
 
 ---
 
@@ -193,6 +213,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/domain/test_verification_rules.py` (new)
 - Done when:
   - Rule combinations produce correct PASS/FAIL outputs with count assertions.
+- **Status:** Complete
+- **Completed:** `verification_engine.py`, `verification_models.py`, `tests/unit/domain/test_verification_rules.py`.
 
 ### TKT-C06-02 - Implement verification evidence payload and error mapping
 - Primary SRS: `SRS-E-VER-001..003`, `SRS-FR-015`
@@ -206,6 +228,8 @@ Mandatory done checks for every ticket:
   - `tests/integration/test_verification_failures.py` (new)
 - Done when:
   - Failed verification includes required summary fields and exact code mapping.
+- **Status:** Complete
+- **Completed:** `verification_result.py` (evidence/code), `test_verification_error_mapping.py`, `test_verification_failures.py`.
 
 ---
 
@@ -223,6 +247,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/domain/test_run_state_factory.py` (new)
 - Done when:
   - Every run gets fresh mutable state with unique run identifiers.
+- **Status:** Complete
+- **Completed:** `run_state_factory.py`, `run_context.py`, `run_lifecycle.py`, `tests/unit/domain/test_run_state_factory.py`.
 
 ### TKT-C07-02 - Enforce teardown and no-state-leakage guarantees
 - Primary SRS: `SRS-FR-020`, `SRS-TEST-015`
@@ -235,6 +261,8 @@ Mandatory done checks for every ticket:
   - `tests/integration/test_scheduler_teardown_on_run_end.py` (new)
 - Done when:
   - Isolation and teardown tests pass for sequential runs.
+- **Status:** Complete
+- **Completed:** `run_lifecycle.py` teardown; `test_run_state_isolation.py`, `test_scheduler_teardown_on_run_end.py`.
 
 ---
 
@@ -253,6 +281,8 @@ Mandatory done checks for every ticket:
   - `tests/e2e/test_gui_crud_smoke.py` (new)
 - Done when:
   - GUI can create/edit/delete each entity and display validation feedback.
+- **Status:** Complete
+- **Completed:** `crud_controller.py`, `crud_views.py`, `crud_presenter.py`, `tests/e2e/test_gui_crud_smoke.py`.
 
 ### TKT-S01-02 - GUI run timeline and periodic task ON/OFF controls
 - Primary SRS: `SRS-UI-002`, `SRS-UI-006`, `SRS-UI-008`, `SRS-FR-019`
@@ -267,6 +297,8 @@ Mandatory done checks for every ticket:
   - `tests/e2e/test_gui_periodic_toggle.py` (new)
 - Done when:
   - User can toggle periodic task ON/OFF and see live execution timeline updates.
+- **Status:** Complete
+- **Completed:** `run_monitor_controller.py`, `run_timeline_view.py`, `periodic_toggle_view.py`, e2e test.
 
 ### TKT-S01-03 - TUI CRUD flows with parity to GUI capabilities
 - Primary SRS: `SRS-UI-003`, `SRS-UI-004`, `SRS-FR-013`
@@ -280,6 +312,8 @@ Mandatory done checks for every ticket:
   - `tests/e2e/test_tui_crud_smoke.py` (new)
 - Done when:
   - TUI supports equivalent CRUD flows and returns equivalent outcomes.
+- **Status:** Complete
+- **Completed:** `config_screen.py`, `crud_commands.py`, `config_presenter.py`, e2e test.
 
 ### TKT-S01-04 - TUI run monitor and periodic toggle command
 - Primary SRS: `SRS-UI-007`, `SRS-UI-008`, `SRS-FR-019`
@@ -293,6 +327,8 @@ Mandatory done checks for every ticket:
   - `tests/e2e/test_tui_periodic_toggle.py` (new)
 - Done when:
   - TUI can toggle periodic tasks and show current runtime status fields.
+- **Status:** Complete
+- **Completed:** `run_screen.py`, `periodic_toggle_command.py`, `run_presenter.py`, e2e test.
 
 ---
 
@@ -310,6 +346,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/domain/test_validation_service.py` (new)
 - Done when:
   - Validation phase outputs are deterministic and error-code mapped.
+- **Status:** Complete
+- **Completed:** `validation_service.py`, `pre_run_validation.py`, `validation_result.py`, unit test.
 
 ### TKT-S02-02 - Implement standardized error envelope and catalog module
 - Primary SRS: Section 11, `SRS-E-*`, `SRS-FR-015`
@@ -323,6 +361,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/domain/test_error_envelope_contract.py` (new)
 - Done when:
   - All emitted errors conform to required envelope fields and codes.
+- **Status:** Complete
+- **Completed:** `error_envelope.py`, `error_catalog.py`, `error_factory.py`, `test_error_envelope_contract.py`.
 
 ---
 
@@ -340,6 +380,8 @@ Mandatory done checks for every ticket:
   - `tests/unit/logging/test_redaction.py` (new)
 - Done when:
   - Lifecycle events are logged with redaction and correlation metadata.
+- **Status:** Complete
+- **Completed:** `structured_logger.py`, `redaction.py`, `log_event_schema.py`, `tests/unit/logging/test_redaction.py`.
 
 ### TKT-S03-02 - Implement metrics collector and baseline NFR benchmark script
 - Primary SRS: `SRS-NFR-006`, `SRS-NFR-007`, `SRS-NFR-008`
@@ -353,6 +395,8 @@ Mandatory done checks for every ticket:
   - `tests/perf/test_latency_baseline.py` (new)
 - Done when:
   - Metrics are emitted and benchmark script reports pass/fail vs SRS thresholds.
+- **Status:** Complete
+- **Completed:** `metrics_collector.py`, `scripts/nfr_benchmark.py`, perf tests for capacity/latency baseline.
 
 ---
 
@@ -369,6 +413,8 @@ Mandatory done checks for every ticket:
   - `scripts/ci_test_runner.py`
 - Done when:
   - CI fails if mapped FR coverage is missing or stale.
+- **Status:** Complete
+- **Completed:** `tests/traceability/test_fr_to_test_mapping.py`, `scripts/ci_test_runner.py`.
 
 ### TKT-S04-02 - Implement critical regression suites in CI
 - Primary SRS: `SRS-NFR-004`, `SRS-NFR-005`, `SRS-TEST-002..018`
@@ -382,6 +428,8 @@ Mandatory done checks for every ticket:
   - `tests/integration/test_stateless_boundary.py` (new)
 - Done when:
   - CI executes required regression suites and blocks on failures.
+- **Status:** Complete
+- **Completed:** `ci_test_runner.py`, `gui_tui_smoke_check.py`, `test_periodic_parallel_flow.py`, `test_stateless_boundary.py`.
 
 ---
 

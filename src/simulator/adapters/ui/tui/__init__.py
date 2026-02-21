@@ -1,0 +1,2 @@
+"""TUI adapter package."""
+

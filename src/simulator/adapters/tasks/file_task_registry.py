@@ -53,6 +53,35 @@ def load_task_file(path: Path) -> TaskDefinition:
     return load_task_file_from_dict(data)
 
 
+def task_definition_to_dict(task: TaskDefinition) -> dict[str, object]:
+    """Convert TaskDefinition to dict for GUI/edit (task_id, name, steps, payloads, defaults)."""
+    steps_list: list[dict[str, object]] = []
+    for s in task.steps:
+        step_dict: dict[str, object] = {
+            "step_id": s.step_id,
+            "action": s.action,
+            "message_type": s.message_type,
+            "payload_ref": s.payload_ref,
+            "timeout_ms": s.timeout_ms,
+        }
+        if s.expect:
+            step_dict["expect"] = {
+                "matcher": {"direction": s.expect.direction, "message_type": s.expect.message_type},
+                "expected_count": s.expect.expected_count,
+                "comparison": s.expect.comparison,
+            }
+        else:
+            step_dict["expect"] = None
+        steps_list.append(step_dict)
+    return {
+        "task_id": task.task_id,
+        "name": task.name,
+        "steps": steps_list,
+        "payloads": dict(task.payloads),
+        "defaults": dict(task.defaults),
+    }
+
+
 class FileTaskRegistryAdapter:
     """Implements TaskRegistryPort by loading .task.json from a directory."""
 
@@ -143,3 +172,10 @@ class FileTaskRegistryAdapter:
             return {"ok": True, "task_id": task_id, "error_code": "OK"}
         except (KeyError, TypeError) as e:
             return {"ok": False, "task_id": "", "error_code": "TASK_DEFINITION_INVALID", "message": str(e)}
+
+    def unregister(self, task_id: str) -> dict[str, object]:
+        """Remove a task from the registry. Returns {ok, error_code}."""
+        if task_id not in self._cache:
+            return {"ok": False, "error_code": "TASK_NOT_FOUND"}
+        del self._cache[task_id]
+        return {"ok": True, "error_code": "OK"}
